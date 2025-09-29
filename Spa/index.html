@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- ===================== META ===================== -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Floréa Spa • Calm & Beauty</title>
+  <meta name="description" content="Spa boutique con masajes, faciales botánicos y rituales sensoriales. Reserva tu experiencia de bienestar." />
+  <meta name="theme-color" content="#8a3e5f" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%238a3e5f'/%3E%3Cpath d='M20 38c8-2 12-6 16-14 3 8 6 12 12 14-6 8-11 12-14 20-3-8-6-12-14-20z' fill='%23f5c6d8'/%3E%3C/svg%3E" />
+  <meta property="og:title" content="Floréa Spa • Calm & Beauty" />
+  <meta property="og:description" content="Masajes, faciales y rituales sensoriales. Reserva ahora." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://source.unsplash.com/1200x630/?spa,feminine" />
+
+  <!-- ===================== ESTILOS (puedes mover a styles.css) ===================== -->
+  <style>
+    /* ===== Tokens ===== */
+    :root{
+      /* Paleta femenina y minimal */
+      --rose-50:#fff7fa; --rose-100:#feeaf2; --rose-200:#fbd6e5; --rose-300:#f5b8d1;
+      --blush-400:#e49ab7; --blush-500:#d37aa0; 
+      --plum-500:#9b4a6c; --plum-600:#8a3e5f; --plum-700:#793553;
+      --cream:#fffdfc; --card:#ffffff; --ink:#231f20; --muted:#67616a;
+      --ring: rgba(211,122,160,.28);
+      --shadow: 0 10px 30px rgba(121,53,83,.12), 0 2px 10px rgba(121,53,83,.10);
+      --radius: 18px; --container: 1160px;
+    }
+
+    a{
+        color:inherit; text-decoration:none; transition: color .25s ease;
+    }
+
+    /* ===== Reset + base ===== */
+    *,*::before,*::after{ box-sizing:border-box; }
+    html,body{ height:100%; scroll-behavior:smooth; }
+    body{
+      margin:0; background:linear-gradient(180deg, var(--cream), var(--rose-50));
+      color:var(--ink); line-height:1.6; letter-spacing:.2px;
+      font-family:"Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    h1,h2,h3{ font-family:"Cormorant Garamond", Georgia, serif; line-height:1.15; letter-spacing:.3px; }
+    img{ max-width:100%; display:block; }
+    .container{ width:min(100% - 2rem, var(--container)); margin-inline:auto; }
+    .btn{
+      display:inline-flex; align-items:center; gap:.55rem; border:1px solid transparent; border-radius:999px;
+      padding:.9rem 1.2rem; font-weight:700; cursor:pointer; box-shadow:var(--shadow);
+      transition: transform .15s ease, box-shadow .25s ease, background .25s ease, color .25s ease, border-color .25s ease;
+    }
+    .btn-primary{ background:linear-gradient(135deg, var(--plum-600), var(--plum-500)); color:#fff; }
+    .btn-primary:hover{ transform:translateY(-2px); }
+    .btn-ghost{ background:#fff; color:var(--plum-600); border-color:rgba(139,62,95,.22); }
+    .btn-ghost:hover{ background:#fff5f9; transform:translateY(-2px); }
+    .eyebrow{ font-weight:800; letter-spacing:.18em; text-transform:uppercase; font-size:.78rem; color:var(--plum-600); }
+
+    /* ===== Header minimal ===== */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(160%) blur(10px);
+      background:linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.58) 70%, transparent);
+      border-bottom:1px solid rgba(121,53,83,.08);
+    }
+    .nav{ display:grid; grid-template-columns: 1fr auto 1fr; align-items:center; padding:.85rem 0; }
+    .brand{ justify-self:start; display:flex; gap:.6rem; align-items:center; text-decoration:none; color:inherit; }
+    .brand svg{ width:30px; height:30px; }
+    .brand strong{ font-weight:800; letter-spacing:.5px; }
+    nav{ justify-self:center; }
+    nav ul{ list-style:none; display:flex; gap:1rem; margin:0; padding:0; }
+    nav a{
+      text-decoration:none; color:var(--ink); font-weight:700; padding:.5rem .8rem; border-radius:999px; position:relative;
+    }
+    nav a:hover{ background:var(--rose-100); }
+    .nav-cta{ justify-self:end; display:flex; gap:.6rem; }
+    .hamb{ display:none; background:transparent; border:0; padding:.4rem; }
+
+    /* ===== Hero ===== */
+    .hero{
+      position:relative; overflow:hidden;
+      background:
+        radial-gradient(1200px 300px at 0% -10%, var(--rose-100), transparent 65%),
+        radial-gradient(900px 300px at 100% 0%, var(--rose-200), transparent 60%);
+    }
+    .hero .inner{ display:grid; gap:2rem; grid-template-columns: 1.05fr .95fr; align-items:center; padding: min(10vw,6rem) 0 3rem; }
+    .hero h1{ font-size: clamp(2.2rem, 4.8vw + .2rem, 4.4rem); margin:.3rem 0 .6rem; }
+    .hero p{ color:var(--muted); font-size: clamp(1rem, 1.1vw + .55rem, 1.15rem); max-width:62ch; }
+    .figure{
+      position:relative; aspect-ratio: 4/3; border-radius: 36px; overflow:hidden; box-shadow: var(--shadow);
+      transform: perspective(1000px) rotateY(-6deg) rotateX(1deg); transition: transform .6s ease;
+      background:#f7e6ef url('https://cdn.pixabay.com/photo/2016/10/11/12/36/massage-therapy-1731456_1280.jpg') center/cover no-repeat;
+    }
+    .figure::after{
+      content:""; position:absolute; inset:0;
+      background: radial-gradient(60% 60% at 80% 20%, rgba(255,255,255,.25), transparent 60%);
+    }
+    .figure:hover{ transform: perspective(1000px) rotateY(0) rotateX(0) scale(1.01); }
+
+    /* ===== Section base ===== */
+    section{ padding: 3.6rem 0; }
+    .head{ text-align:center; margin-bottom:1.6rem; }
+    .head h2{ font-size: clamp(1.8rem, 2.2vw + .8rem, 3rem); margin:.35rem 0 .4rem; }
+    .head p{ color:var(--muted); max-width:64ch; margin-inline:auto; }
+
+    /* ===== Servicios (mínimo + íconos) ===== */
+    .services{ background:#fff; border-radius: 28px; box-shadow: var(--shadow); padding:1.2rem; }
+    .tiles{ display:grid; gap:1rem; grid-template-columns: repeat(6, 1fr); }
+    .tile{
+      grid-column: span 2; background: linear-gradient(180deg, var(--rose-50), #fff);
+      border:1px solid #f6e2ec; border-radius:22px; padding:1rem; position:relative; overflow:hidden; transition: box-shadow .25s, transform .2s ease;
+    }
+    .tile:hover{ transform: translateY(-4px); box-shadow: 0 18px 42px rgba(121,53,83,.16); }
+    .tile .icon-badge{
+      width:68px; height:68px; border-radius:16px; display:grid; place-items:center;
+      background: radial-gradient(75% 75% at 30% 30%, var(--rose-200), var(--rose-100));
+      box-shadow: var(--shadow); color: var(--plum-600);
+    }
+    .tile .icon{ width:34px; height:34px; }
+    .tile h3{ margin:.6rem 0 .3rem; font-size:1.15rem; }
+    .tile p{ color:var(--muted); margin:.2rem 0 .6rem; font-size:.98rem; }
+    .meta{ display:flex; gap:.5rem; align-items:center; color:var(--plum-600); font-weight:700; font-size:.85rem; }
+
+    /* ===== Nosotros ===== */
+    .about{ display:grid; gap:2rem; grid-template-columns: .95fr 1.05fr; align-items:center; }
+    .about .photo{
+      border-radius: 26px; overflow:hidden; box-shadow: var(--shadow);
+      background:#f5d7e6 url('https://cdn.pixabay.com/photo/2018/02/27/03/39/people-3184615_1280.jpg') center/cover no-repeat; aspect-ratio: 4/3;
+    }
+    .bullets{ list-style:none; padding:0; margin:1rem 0; display:grid; gap:.55rem; }
+    .bullets li{ display:flex; gap:.6rem; align-items:flex-start; }
+    .dot{ width:10px; height:10px; border-radius:50%; background: radial-gradient(50% 50% at 30% 30%, #fff, var(--plum-600)); margin-top:.45rem; flex:0 0 auto; }
+
+    /* ===== Menciones (scroll-snap) ===== */
+    .rail{
+      display:flex; gap:1rem; overflow:auto; scroll-snap-type:x mandatory; padding-bottom:.6rem;
+      scrollbar-width: thin; scrollbar-color: var(--plum-600) #f8e6f0;
+    }
+    .rail::-webkit-scrollbar{ height:10px; }
+    .rail::-webkit-scrollbar-thumb{ background:var(--plum-600); border-radius:999px; }
+    .rail::-webkit-scrollbar-track{ background:#f8e6f0; border-radius:999px; }
+    .tcard{
+      scroll-snap-align:center; flex: 0 0 78%; max-width: 880px;
+      background:#fff; border:1px solid #f2d9e6; border-radius:22px; box-shadow: var(--shadow); padding:1.1rem;
+      display:grid; grid-template-columns: 88px 1fr; gap:1rem; align-items:center;
+    }
+    .tcard img{ width:88px; height:88px; border-radius:50%; object-fit:cover; }
+    .stars{ color:#f59e0b; letter-spacing:1px; }
+
+    /* ===== Contacto / Reservas (labels flotantes minimal) ===== */
+    .contact{ display:grid; gap:1.4rem; grid-template-columns: 1.05fr .95fr; align-items:stretch; }
+    .card{ background:#fff; border:1px solid #f6e2ec; border-radius:22px; box-shadow: var(--shadow); padding:1.2rem; }
+    .field{ position:relative; margin:.85rem 0; }
+    .field input, .field select, .field textarea{
+      width:100%; padding:1.05rem .95rem .9rem; border-radius:14px; border:1px solid #f0d9e6; background:#fff; outline:none;
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: .98rem;
+    }
+    .field textarea{ min-height:120px; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--plum-600); box-shadow:0 0 0 4px var(--ring); background:#fff9fc; }
+    .label{
+      position:absolute; left:14px; top:12px; padding:0 .25rem; background:#fff; color:#8a7b85; font-size:.92rem;
+      transform-origin:left top; transition: transform .16s ease, color .16s ease, top .16s ease; pointer-events:none;
+    }
+    .field:focus-within .label,
+    .field input:not(:placeholder-shown)+.label,
+    .field textarea:not(:placeholder-shown)+.label{
+      transform: scale(.82) translateY(-18px); color:var(--plum-600); top:8px;
+    }
+    .aside{
+      border-radius:22px; overflow:hidden; position:relative; min-height:420px;
+      background:#f7e6ef url('https://cdn.pixabay.com/photo/2016/07/24/22/48/essential-oils-1539457_1280.jpg') center/cover no-repeat;
+    }
+    .aside .overlay{
+      position:absolute; inset:0; background:linear-gradient(180deg, rgba(139,62,95,.08), rgba(139,62,95,.35));
+      display:flex; align-items:flex-end; padding:1rem; color:#fff;
+    }
+
+    /* ===== FAQ ===== */
+    .faq{ max-width:900px; margin-inline:auto; }
+    .faq-item{ background:#fff; border:1px solid #f6e2ec; border-radius:16px; box-shadow: var(--shadow); margin:.8rem 0; overflow:hidden; }
+    .faq-q{ display:flex; justify-content:space-between; align-items:center; gap:.8rem; padding:1rem 1.1rem; cursor:pointer; user-select:none; }
+    .faq-q h3{ margin:0; font-size:1rem; }
+    .faq-a{ max-height:0; overflow:hidden; transition:max-height .32s ease; border-top:1px solid #f6e2ec; padding:0 1.1rem; }
+    .faq-item.open .faq-a{ max-height:300px; padding:1rem 1.1rem; }
+
+    /* ===== Footer ===== */
+    footer{ background:#2a0f19; color:#f5e9ee; margin-top:2rem; }
+    .fgrid{ display:grid; gap:1rem; grid-template-columns: 1.2fr .8fr .8fr; padding:2rem 0; }
+    footer a{ color:#ffd3e6; text-decoration:none; font-weight:600; }
+    .credits{ border-top:1px solid rgba(255,255,255,.14); padding:1rem 0; display:flex; justify-content:space-between; color:#f1d4de; }
+
+    /* ===== Animaciones de entrada ===== */
+    .reveal{ opacity:0; transform: translateY(20px); }
+    .reveal.in{ opacity:1; transform:none; transition: opacity .7s ease, transform .7s ease; }
+    .reveal.left{ transform: translateX(-22px); }
+    .reveal.right{ transform: translateX(22px); }
+
+    /* ===== Accesibilidad / Motion ===== */
+    @media (prefers-reduced-motion: reduce){
+      .reveal, .figure{ transition:none !important; }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width:1000px){
+      .hero .inner{ grid-template-columns:1fr; }
+      .about{ grid-template-columns:1fr; }
+      .contact{ grid-template-columns:1fr; }
+      .tiles{ grid-template-columns: repeat(2, 1fr); }
+      .tcard{ flex-basis: 88%; grid-template-columns:72px 1fr; }
+      .nav{ grid-template-columns:auto 1fr auto; }
+    }
+    /* Menú móvil oculto por defecto */
+.menu{
+  display:none;
+}
+
+/* Solo mostrar en móviles */
+@media (max-width:860px){
+  nav{ display:none; }
+  .hamb{ display:block; justify-self:end; }
+
+  .menu{
+    position:fixed;
+    inset:70px 12px auto 12px;
+    background:#fff;
+    border:1px solid #f6e2ec;
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    padding:.6rem;
+    flex-direction:column;
+    gap:.4rem;
+    z-index:60;
+  }
+
+  .menu a{
+    padding:.7rem .8rem;
+    border-radius:10px;
+    color:var(--ink);
+    text-decoration:none;
+    font-weight:700;
+  }
+  .menu a:hover{ background:var(--rose-100); }
+
+  .menu.open{ display:flex; }
+}
+
+
+    /* ===== Acciones flotantes ===== */
+    .whatsapp{
+      position:fixed; right:16px; bottom:16px; z-index:60; display:inline-flex; align-items:center; gap:.6rem;
+      background:linear-gradient(135deg, #22c55e, #16a34a); color:white; padding:.85rem 1rem; border-radius:999px; text-decoration:none; font-weight:800; box-shadow: var(--shadow);
+    }
+    .whatsapp svg{ width:22px; height:22px; }
+    .to-top{
+      position:fixed; right:20px; bottom:76px; z-index:50; background:#fff; border:1px solid #f0d9e6; border-radius:999px; padding:.6rem;
+      box-shadow: var(--shadow); display:none;
+    }
+    .to-top.show{ display:block; }
+  </style>
+
+  <!-- ===================== SEO (JSON-LD) ===================== -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"DaySpa",
+    "name":"Floréa Spa",
+    "image":"https://images.unsplash.com/photo-1600431521340-491eca880813",
+    "address":{"@type":"PostalAddress","streetAddress":"Av. Rosas 245","addressLocality":"Ciudad de México","addressRegion":"CDMX","postalCode":"01000","addressCountry":"MX"},
+    "telephone":"+52 55 9876 5432",
+    "openingHours":"Mo-Su 10:00-20:00",
+    "priceRange":"$$"
+  }
+  </script>
+</head>
+<body>
+  <!-- ===================== HEADER ===================== -->
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="Inicio">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="14" fill="#8a3e5f"/><path d="M22 38c7-2 10-6 14-14 3 8 6 12 11 14-5 7-9 10-12 16-3-6-5-9-13-16z" fill="#f5c6d8"/></svg>
+        <strong>Floréa</strong>
+      </a>
+
+      <nav aria-label="Principal">
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#menciones">Menciones</a></li>
+          <li><a href="#contacto">Reservas</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <button class="hamb" id="hamb" aria-label="Abrir menú">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M10 18h10"/></svg>
+      </button>
+      <div class="menu" id="menu">
+        <a href="#inicio">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#menciones">Menciones</a>
+        <a href="#contacto">Reservas</a>
+        <a href="#faq">FAQ</a>
+      </div>
+
+      <div class="nav-cta">
+        
+        <a class="btn btn-primary" href="#contacto">Reservar</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="inicio" class="hero">
+    <div class="container inner">
+      <div class="reveal in">
+        <span class="eyebrow">Spa Boutique</span>
+        <h1>Descansa, respira<br/> y vuelve a ti</h1>
+        <p>Experiencias sensoriales con masajes, faciales botánicos y aromaterapia en un espacio diseñado para mujeres que buscan calma y belleza consciente.</p>
+        <div style="display:flex; gap:.8rem; flex-wrap:wrap; margin-top:1rem;">
+          <a class="btn btn-primary" href="#contacto">Reservar ahora</a>
+          <a class="btn btn-ghost" href="#servicios">Ver servicios</a>
+        </div>
+      </div>
+      <div class="figure reveal right" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ===================== SERVICIOS ===================== -->
+  <section id="servicios">
+    <div class="container">
+      <div class="head">
+        <span class="eyebrow">Servicios</span>
+        <h2>Rituales minimalistas, resultados visibles</h2>
+        <p>Protocolos con productos naturales y técnicas profesionales. Elige tu ritual; podemos personalizarlo.</p>
+      </div>
+
+      <div class="services">
+        <div class="tiles">
+          <article class="tile reveal">
+            <span class="icon-badge" aria-hidden="true">
+              <svg class="icon"><use href="#i-massage"></use></svg>
+            </span>
+            <h3>Masaje relajante</h3>
+            <p>Presión sueca para liberar tensión y calmar el sistema nervioso.</p>
+            <div class="meta">60 min · Aromas suaves</div>
+          </article>
+
+          <article class="tile reveal">
+            <span class="icon-badge" aria-hidden="true">
+              <svg class="icon"><use href="#i-hotstone"></use></svg>
+            </span>
+            <h3>Piedras calientes</h3>
+            <p>Basalto volcánico para relajación profunda y mejor circulación.</p>
+            <div class="meta">75 min · Calor terapéutico</div>
+          </article>
+
+          <article class="tile reveal">
+            <span class="icon-badge" aria-hidden="true">
+              <svg class="icon"><use href="#i-facial"></use></svg>
+            </span>
+            <h3>Facial botánico</h3>
+            <p>Limpieza, masaje facial y mascarilla antioxidante.</p>
+            <div class="meta">Piel sensible · Glow</div>
+          </article>
+
+          <article class="tile reveal">
+            <span class="icon-badge" aria-hidden="true">
+              <svg class="icon"><use href="#i-aroma"></use></svg>
+            </span>
+            <h3>Aromaterapia</h3>
+            <p>Sinergias de aceites esenciales para equilibrio cuerpo–mente.</p>
+            <div class="meta">Lavanda · Neroli</div>
+          </article>
+
+          <article class="tile reveal">
+            <span class="icon-badge" aria-hidden="true">
+              <svg class="icon"><use href="#i-mani"></use></svg>
+            </span>
+            <h3>Mani &amp; Pedi</h3>
+            <p>Cuidado completo y esmaltado de larga duración.</p>
+            <div class="meta">Gel disponible</div>
+          </article>
+
+          <article class="tile reveal">
+            <span class="icon-badge" aria-hidden="true">
+              <svg class="icon"><use href="#i-sauna"></use></svg>
+            </span>
+            <h3>Hidroterapia</h3>
+            <p>Circuito de agua y vapor para desintoxicación suave.</p>
+            <div class="meta">Day pass · Relax</div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== NOSOTROS ===================== -->
+  <section id="nosotros">
+    <div class="container">
+      <div class="head">
+        <span class="eyebrow">Nosotras</span>
+        <h2>Un refugio de calma con mirada femenina</h2>
+      </div>
+
+      <div class="about">
+        <div class="photo reveal left" aria-hidden="true"></div>
+        <div class="reveal right">
+          <h3 style="margin:.2rem 0 1rem;">Técnicas artesanales, productos botánicos y trato humano.</h3>
+          <p>Somos terapeutas certificadas. Integramos protocolos contemporáneos con saberes tradicionales para una experiencia segura y memorable. Usamos aceites veganos y cruelty free.</p>
+          <ul class="bullets">
+            <li><span class="dot"></span> Cabinas privadas con iluminación cálida.</li>
+            <li><span class="dot"></span> Ritual de bienvenida con infusión herbal.</li>
+            <li><span class="dot"></span> Membresías con beneficios y precios preferenciales.</li>
+          </ul>
+          <div style="display:flex; gap:.6rem; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="#contacto">Quiero mi sesión</a>
+            <a class="btn btn-ghost" href="tel:+525598765432">Llamar ahora</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MENCIONES (scroll-snap minimal) ===================== -->
+  <section id="menciones">
+    <div class="container">
+      <div class="head">
+        <span class="eyebrow">Menciones</span>
+        <h2>Palabras que nos inspiran</h2>
+      </div>
+
+      <div class="rail" id="rail">
+        <article class="tcard">
+          <img src="https://i.pravatar.cc/120?img=35" alt="Foto de Vale">
+          <div>
+            <div class="stars" aria-label="5 estrellas">★★★★★</div>
+            <p>“Ambiente impecable y femenino. Salí con la piel luminosa y cero irritación.”</p>
+            <strong>— Vale M.</strong>
+          </div>
+        </article>
+
+        <article class="tcard">
+          <img src="https://i.pravatar.cc/120?img=10" alt="Foto de Sofía">
+          <div>
+            <div class="stars">★★★★★</div>
+            <p>“El masaje con piedras es magia pura. Atención amorosa de inicio a fin.”</p>
+            <strong>— Sofía L.</strong>
+          </div>
+        </article>
+
+        <article class="tcard">
+          <img src="https://i.pravatar.cc/120?img=22" alt="Foto de Dani">
+          <div>
+            <div class="stars">★★★★★</div>
+            <p>“Minimalista y elegante. Aromas suaves, música perfecta. Volveré.”</p>
+            <strong>— Daniela R.</strong>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACTO / RESERVAS ===================== -->
+  <section id="contacto">
+    <div class="container">
+      <div class="head">
+        <span class="eyebrow">Reservas</span>
+        <h2>Agenda tu ritual</h2>
+        <p>Déjanos tus datos y te confirmamos por WhatsApp o correo. También podemos asesorarte por llamada.</p>
+      </div>
+
+      <div class="contact">
+        <form class="card reveal left" id="form">
+          <div class="field">
+            <input id="nombre" name="nombre" type="text" placeholder=" " required />
+            <span class="label">Nombre completo</span>
+          </div>
+          <div class="field">
+            <input id="telefono" name="telefono" type="tel" placeholder=" " required />
+            <span class="label">Teléfono</span>
+          </div>
+          <div class="field">
+            <input id="email" name="email" type="email" placeholder=" " />
+            <span class="label">Email (opcional)</span>
+          </div>
+          <div class="field">
+            <input id="fecha" name="fecha" type="date" placeholder=" " />
+            <span class="label">Fecha preferida</span>
+          </div>
+          <div class="field">
+            <select id="servicio" name="servicio">
+              <option>Masaje relajante</option>
+              <option>Piedras calientes</option>
+              <option>Facial botánico</option>
+              <option>Aromaterapia</option>
+              <option>Mani &amp; Pedi</option>
+              <option>Hidroterapia</option>
+            </select>
+            <span class="label">Servicio</span>
+          </div>
+          <div class="field">
+            <textarea id="mensaje" name="mensaje" placeholder=" "></textarea>
+            <span class="label">¿Algo que debamos saber?</span>
+          </div>
+          <div style="display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.3rem;">
+            <button class="btn btn-primary" type="submit">Enviar solicitud</button>
+            <a class="btn btn-ghost" href="https://wa.me/525598765432?text=Hola%20quiero%20reservar%20en%20Florea%20Spa" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+          <p id="form-status" role="status" aria-live="polite" style="margin:.5rem 0 0;color:var(--muted);"></p>
+        </form>
+
+        <aside class="aside reveal right">
+          <div class="overlay">
+            <div>
+              <h3 style="margin:.2rem 0;">Floréa Spa</h3>
+              <p>Av. Rosas 245, Col. Centro, CDMX · L–D 10:00–20:00</p>
+              <p style="margin:.3rem 0;"><strong>Tel:</strong> <a href="tel:+525598765432" style="color:#fff; text-decoration:underline;">+52 55 9876 5432</a></p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq">
+    <div class="container">
+      <div class="head">
+        <span class="eyebrow">FAQ</span>
+        <h2>Resolvemos tus dudas</h2>
+      </div>
+
+      <div class="faq">
+        <article class="faq-item reveal">
+          <div class="faq-q" role="button" aria-expanded="false">
+            <h3>¿Debo llegar con anticipación?</h3>
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 8l6 6H6l6-6z"/></svg>
+          </div>
+          <div class="faq-a">
+            <p>Llega 10–15 minutos antes para un check-in tranquilo y elegir tu aroma.</p>
+          </div>
+        </article>
+
+        <article class="faq-item reveal">
+          <div class="faq-q" role="button" aria-expanded="false">
+            <h3>¿Tienen Gift Cards?</h3>
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 8l6 6H6l6-6z"/></svg>
+          </div>
+          <div class="faq-a">
+            <p>Sí, físicas y digitales. Podemos personalizarlas para ocasiones especiales.</p>
+          </div>
+        </article>
+
+        <article class="faq-item reveal">
+          <div class="faq-q" role="button" aria-expanded="false">
+            <h3>¿Puedo ir con alguna condición médica?</h3>
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 8l6 6H6l6-6z"/></svg>
+          </div>
+          <div class="faq-a">
+            <p>Consúltalo con tu médica/o y cuéntanos en el formulario para adaptar tu experiencia.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="container fgrid">
+      <div>
+        <a class="brand" href="#inicio" style="color:#ffd3e6; text-decoration:none;">
+          <svg viewBox="0 0 64 64" aria-hidden="true" style="vertical-align:middle;margin-right:.4rem;"><circle cx="32" cy="32" r="14" fill="#f5c6d8"/><path d="M22 38c7-2 10-6 14-14 3 8 6 12 11 14-5 7-9 10-12 16-3-6-5-9-13-16z" fill="#9b4a6c"/></svg>
+          <strong>Floréa</strong>
+        </a>
+        <p style="margin:.6rem 0 0;">Calma y belleza conscientes.</p>
+      </div>
+      <div>
+        <strong>Contacto</strong>
+        <p>Av. Rosas 245, CDMX<br/><a href="tel:+525598765432">+52 55 9876 5432</a><br/><a href="mailto:hola@florea.mx">hola@florea.mx</a></p>
+      </div>
+      <div>
+        <strong>Secciones</strong>
+        <p><a href="#servicios">Servicios</a> • <a href="#nosotros">Nosotros</a> • <a href="#menciones">Menciones</a> • <a href="#contacto">Reservas</a> • <a href="#faq">FAQ</a></p>
+      </div>
+    </div>
+    <div class="container credits">
+      <span>© <span id="year"></span> Floréa Spa. Todos los derechos reservados.</span>
+      <span>
+        Hecho por 
+        <a href="https://www.facebook.com/profile.php?id=61573463732776" target="_blank" rel="noopener" style="color:#ffd3e6; font-weight:700; text-decoration:underline;">
+          ¡Órale web!
+        </a>
+      </span>
+    </div>
+  </footer>
+
+  <!-- ===================== BOTONES FLOTANTES ===================== -->
+  <a class="whatsapp" href="https://wa.me/525598765432?text=Hola%20quiero%20reservar%20en%20Florea%20Spa" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4a1 1 0 0 0-1 1v16l4-4h13a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z"/></svg>
+    WhatsApp
+  </a>
+  <button class="to-top" id="toTop" aria-label="Arriba">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 8l6 6H6z"/></svg>
+  </button>
+
+  <!-- ===================== SPRITE SVG (íconos finos, estilo minimal) ===================== -->
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <!-- Masaje -->
+      <symbol id="i-massage" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="10" r="2"/>
+          <path d="M8 11h8" />
+          <path d="M3 14h14M5 14v4M15 14v4" />
+          <path d="M2 12h2" />
+        </g>
+      </symbol>
+      <!-- Facial -->
+      <symbol id="i-facial" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5" />
+          <path d="M9.5 14a3 3 0 0 0 5 0" />
+          <path d="M10 12h.01M14 12h.01" />
+          <path d="M8 8c2-2 6-2 8 0" />
+        </g>
+      </symbol>
+      <!-- Aromaterapia -->
+      <symbol id="i-aroma" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 7h6M11 7V5h2v2" />
+          <path d="M8 9h8v7a3 3 0 0 1-3 3h-2a3 3 0 0 1-3-3V9z" />
+          <path d="M5.5 11c-.6 1-.6 2 0 3M18.5 11c.6 1 .6 2 0 3" />
+        </g>
+      </symbol>
+      <!-- Piedras calientes -->
+      <symbol id="i-hotstone" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="8" y="7" width="8" height="3" rx="1.5" />
+          <rect x="7" y="11" width="10" height="3" rx="1.5" />
+          <rect x="6" y="15" width="12" height="3" rx="1.5" />
+          <path d="M6 5c0 1 .5 1.6 1 2M18 5c0 1-.5 1.6-1 2" />
+        </g>
+      </symbol>
+      <!-- Mani & Pedi -->
+      <symbol id="i-mani" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="6" height="7" rx="2" />
+          <path d="M10 6h4v3h-4z" />
+          <path d="M12 6V4" />
+        </g>
+      </symbol>
+      <!-- Sauna / Hidro -->
+      <symbol id="i-sauna" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 11l8-6 8 6" />
+          <path d="M6 11v7h12v-7" />
+          <path d="M7 16h10" />
+          <path d="M9 13c-1 1-1 2 0 3M15 13c1 1 1 2 0 3" />
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ===================== SCRIPTS (puedes mover a app.js) ===================== -->
+  <script>
+    // Utils
+    const $ = (s,p=document)=>p.querySelector(s);
+    const $$ = (s,p=document)=>p.querySelectorAll(s);
+
+    // Menú móvil
+    const hamb = $('#hamb'); const menu = $('#menu');
+    hamb?.addEventListener('click', ()=> menu.classList.toggle('open'));
+    menu?.addEventListener('click', e=>{ if(e.target.tagName==='A') menu.classList.remove('open'); });
+
+    // Año footer
+    $('#year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); }
+      })
+    }, { threshold:.12 });
+    $$('.reveal').forEach(el=> io.observe(el));
+
+    // Scroll to top
+    const toTop = $('#toTop');
+    window.addEventListener('scroll', ()=> (window.scrollY>600) ? toTop.classList.add('show') : toTop.classList.remove('show'));
+    toTop.addEventListener('click', ()=> window.scrollTo({ top:0, behavior:'smooth' }));
+
+    // Rail controls (drag con scroll nativo + botones opcionales si los añades)
+    const rail = $('#rail');
+    let isDown=false, startX, scrollLeft;
+    rail?.addEventListener('mousedown', e=>{ isDown=true; rail.classList.add('drag'); startX=e.pageX - rail.offsetLeft; scrollLeft=rail.scrollLeft; });
+    rail?.addEventListener('mouseleave', ()=> isDown=false);
+    rail?.addEventListener('mouseup', ()=> isDown=false);
+    rail?.addEventListener('mousemove', e=>{
+      if(!isDown) return;
+      e.preventDefault();
+      const x=e.pageX - rail.offsetLeft;
+      const walk=(x - startX)*1.2;
+      rail.scrollLeft=scrollLeft - walk;
+    });
+
+    // FAQ acordeón
+    $$('.faq-item .faq-q').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const item = btn.parentElement;
+        const expanded = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', expanded);
+      });
+    });
+
+    // Form demo
+    const form = $('#form');
+    form?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const status = $('#form-status');
+      status.textContent = 'Enviando...';
+      setTimeout(()=>{
+        status.style.color = 'var(--plum-600)';
+        status.textContent = '¡Gracias! Te contactaremos para confirmar tu reserva.';
+        form.reset();
+      }, 850);
+      // Integración real: fetch('/api/reservas', { method:'POST', body:new FormData(form) })
+      // o conecta a n8n / Sheets / correo.
+    });
+  </script>
+
+  <!-- ===================== NOTAS PARA DIVIDIR =====================
+    - index.html: conserva estructura y enlaza /css/styles.css y /js/app.js
+    - styles.css: mueve todo lo del <style>
+    - app.js: mueve todo lo del <script>
+    - Ajusta paleta en :root para tu marca
+    - Reemplaza imágenes Unsplash por /img propias
+  ================================================================== -->
+</body>
+</html>

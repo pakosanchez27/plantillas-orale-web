@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GYM PRO – Transforma tu cuerpo en 30 días</title>
+  <meta name="description" content="Landing page moderna para gimnasio: propuesta de valor clara, CTA visibles, testimonios, oferta irresistible, formulario simple e integración con WhatsApp." />
+  <meta property="og:title" content="GYM PRO – Transforma tu cuerpo en 30 días" />
+  <meta property="og:description" content="Entrenadores certificados, planes personalizados y clases como CrossFit, Yoga y Spinning. ¡Agenda tu clase de prueba!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230b0c10'/><text x='50' y='58' font-size='48' text-anchor='middle' fill='%235dd39e'>G</text></svg>">
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card: #121318;
+      --ink: #e9eef1;
+      --muted: #9fb0bb;
+      --accent: #5dd39e;
+      --accent-2: #00e0ff;
+      --danger: #ff6b6b;
+      --ok: #6bff95;
+      --maxw: 1200px;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    * { box-sizing: border-box }
+    html,body { height: 100% }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans }
+    a { color: inherit; text-decoration: none }
+    img,video { max-width: 100%; height: auto; display: block; border-radius: var(--radius) }
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 24px }
+    header { position: sticky; top: 0; z-index: 50; background: linear-gradient(180deg, rgba(11,12,16,.95), rgba(11,12,16,.75)); backdrop-filter: blur(6px); border-bottom: 1px solid #1c1d24 }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .3px }
+    .brand .logo { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: radial-gradient(100% 100% at 0% 0%, var(--accent), var(--accent-2)); color: #061016; font-weight: 800 }
+    .nav a { opacity: .9 }
+    .nav .cta { padding: 10px 16px; border-radius: 12px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #061016; font-weight: 700; box-shadow: var(--shadow); border: 0; cursor: pointer }
+    .navlinks { display: none; gap: 18px }
+    @media (min-width: 860px){ .navlinks { display: flex } }
+
+    /* HERO */
+    .hero { position: relative; overflow: clip; border-bottom: 1px solid #1c1d24 }
+    .hero .grid { display: grid; gap: 28px }
+    @media (min-width: 960px){ .hero .grid { grid-template-columns: 1.1fr .9fr; align-items: center } }
+    .hero h1 { font-size: clamp(28px, 5vw, 54px); line-height: 1.08; margin: 8px 0 14px }
+    .kicker { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .12em }
+    .kicker .dot { width: 8px; height: 8px; border-radius: 99px; background: var(--accent) }
+    .sub { color: var(--muted); font-size: clamp(14px, 1.8vw, 18px); margin-bottom: 18px }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap }
+    .btn { padding: 14px 18px; border-radius: 14px; border: 1px solid #22252e; background: #151722; color: var(--ink); font-weight: 700; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease }
+    .btn:hover { transform: translateY(-2px) }
+    .btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #061016; border: 0; box-shadow: var(--shadow) }
+    .trust { display: grid; gap: 14px; margin-top: 26px }
+    @media (min-width: 700px){ .trust { grid-template-columns: auto 1fr } }
+    .badges { display: flex; gap: 10px; flex-wrap: wrap; align-items: center }
+    .badge { padding: 8px 12px; border-radius: 999px; border: 1px solid #1e2129; color: var(--muted); font-size: 13px; background: #0f1117 }
+    .rating { display: inline-flex; align-items: center; gap: 8px }
+    .stars { letter-spacing: 2px }
+
+    .hero-media { position: relative; aspect-ratio: 16/10; border-radius: calc(var(--radius) + 6px); background: radial-gradient(120% 100% at 0 0, #1a1d29 0, #0c0e13 70%); padding: 10px; box-shadow: var(--shadow) }
+    .hero-media::after { content: ""; position: absolute; inset: -2px; border-radius: inherit; padding: 2px; background: linear-gradient(135deg, rgba(93,211,158,.35), rgba(0,224,255,.35)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude }
+
+    /* SECTIONS */
+    section { scroll-margin-top: 90px }
+    .section { border-top: 1px solid #1c1d24 }
+    .section h2 { font-size: clamp(22px, 3.2vw, 32px); margin: 0 0 12px }
+    .muted { color: var(--muted) }
+
+    .grid3 { display: grid; gap: 16px }
+    @media (min-width: 860px){ .grid3 { grid-template-columns: repeat(3, 1fr) } }
+    .card { background: #10121a; border: 1px solid #1b1e27; padding: 18px; border-radius: var(--radius); box-shadow: 0 6px 16px rgba(0,0,0,.25); transition: transform .25s ease, box-shadow .25s ease }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(0,0,0,.35) }
+
+    .icon { width: 28px; height: 28px; margin-right: 8px; flex: 0 0 auto }
+    .row { display: flex; align-items: center; gap: 8px }
+
+    /* PROGRAMAS */
+    .programs { display: grid; gap: 14px }
+    @media (min-width: 900px){ .programs { grid-template-columns: repeat(4, 1fr) } }
+    .program { position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid #1c1f29; background: #0f1116 }
+    .program img { aspect-ratio: 4/3; object-fit: cover }
+    .program .p-body { padding: 12px 14px }
+
+    /* OFERTA + URGENCIA */
+    .offer { display: grid; gap: 18px; align-items: center }
+    @media (min-width: 960px){ .offer { grid-template-columns: 1.2fr .8fr } }
+    .ticker { display: flex; gap: 10px; flex-wrap: wrap }
+    .pill { padding: 8px 12px; border: 1px solid #233; border-radius: 999px; background: #0d1117; color: var(--muted); font-size: 13px }
+    .countdown { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px }
+    .timebox { min-width: 80px; text-align: center; padding: 10px; background: #0f121a; border: 1px solid #1a1e28; border-radius: 12px }
+    .spots { font-weight: 800; color: var(--ok) }
+
+    /* TESTIMONIOS */
+    .slider { position: relative; overflow: hidden }
+    .track { display: grid; grid-auto-flow: column; gap: 16px; overflow: auto; scroll-snap-type: x mandatory; scrollbar-width: none }
+    .track::-webkit-scrollbar { display: none }
+    .slide { scroll-snap-align: start; width: min(420px, 86vw); background: #0f1117; border: 1px solid #1b1e27; border-radius: var(--radius); padding: 16px }
+    .t-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px }
+    .avatar { width: 44px; height: 44px; border-radius: 12px; object-fit: cover }
+    .quote { color: var(--ink) }
+
+    .slider .dots { display: flex; gap: 8px; justify-content: center; margin-top: 12px }
+    .slider .dots button { width: 8px; height: 8px; border-radius: 99px; border: 0; background: #2a2d36; cursor: pointer }
+    .slider .dots button.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)) }
+
+    /* GALERÍA */
+    .gallery { display: grid; gap: 12px; grid-template-columns: 1.5fr 1fr }
+    @media (max-width: 860px){ .gallery { grid-template-columns: 1fr } }
+
+    /* FORM */
+    form { display: grid; gap: 12px }
+    input, textarea, select { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid #222633; background: #0e1016; color: var(--ink) }
+    label { font-size: 14px; color: var(--muted) }
+    .privacy { font-size: 12px; color: var(--muted) }
+
+    footer { border-top: 1px solid #1c1d24; color: var(--muted) }
+
+    /* STICKY BAR (mobile) */
+    .sticky-cta { position: fixed; left: 0; right: 0; bottom: 12px; z-index: 60; display: grid; place-items: center; pointer-events: none }
+    .sticky-cta .inner { pointer-events: auto; display: flex; gap: 10px; background: #0f1117; border: 1px solid #1b1e27; border-radius: 999px; padding: 8px; box-shadow: var(--shadow) }
+    .sticky-cta .inner a { padding: 10px 14px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #061016; font-weight: 800 }
+    @media (min-width: 860px){ .sticky-cta { display: none } }
+
+    /* REVEAL on scroll */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease }
+    .reveal.in { opacity: 1; transform: none }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      * { animation: none !important; transition: none !important }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><span class="logo">G</span> GYM PRO</div>
+      <nav class="navlinks">
+        <a href="#beneficios">Beneficios</a>
+        <a href="#programas">Programas</a>
+        <a href="#testimonios">Testimonios</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <button class="cta" data-scroll="#contacto">Prueba gratis</button>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container grid">
+        <div>
+          <div class="kicker"><span class="dot"></span> Entrena con expertos</div>
+          <h1>Transforma tu cuerpo en <span style="background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">30 días</span> con entrenadores certificados</h1>
+          <p class="sub">Planes personalizados, clases dinámicas y un ambiente que te impulsa a dar tu mejor versión. ¡Tu cambio empieza hoy!</p>
+          <div class="hero-ctas">
+            <a class="btn primary" href="#contacto">Agenda tu clase de prueba</a>
+            <a class="btn" href="https://wa.me/521234567890?text=Hola%20quiero%20mi%20clase%20de%20prueba%20%F0%9F%92%AA" target="_blank" rel="noopener">Hablar por WhatsApp</a>
+          </div>
+          <div class="trust">
+            <div class="rating"><span class="stars">★★★★★</span> <span class="muted">4.9 en Google (120+ reseñas)</span></div>
+            <div class="badges">
+              <span class="badge">Entrenadores <strong>certificados</strong></span>
+              <span class="badge">Miembro <strong>ACE</strong></span>
+              <span class="badge">Protocolos <strong>COVID-safe</strong></span>
+              <span class="badge">Resultados <strong>reales</strong></span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img loading="eager" alt="Personas entrenando en gimnasio moderno" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop" />
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFICIOS -->
+    <section id="beneficios" class="section">
+      <div class="container">
+        <h2>Beneficios claros y específicos</h2>
+        <p class="muted">Más que “ponerse en forma”: te damos estructura, acompañamiento y resultados medibles.</p>
+        <div class="grid3 reveal">
+          <div class="card row">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 18v-6a8 8 0 1116 0v6" stroke="currentColor" stroke-width="1.7"/><path d="M2 18h20v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2z" stroke="currentColor" stroke-width="1.7"/></svg>
+            <div>
+              <h3>Planes personalizados</h3>
+              <p class="muted">Rutinas a tu medida con seguimiento y ajustes semanales.</p>
+            </div>
+          </div>
+          <div class="card row">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.7"/><path d="M4 22a8 8 0 0116 0" stroke="currentColor" stroke-width="1.7"/></svg>
+            <div>
+              <h3>Entrenadores certificados</h3>
+              <p class="muted">Equipo con certificaciones ACE / NASM y experiencia real.</p>
+            </div>
+          </div>
+          <div class="card row">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.7"/></svg>
+            <div>
+              <h3>Horarios flexibles</h3>
+              <p class="muted">Abierto 6:00–23:00 y clases cada hora en franjas pico.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAMAS / CLASES -->
+    <section id="programas" class="section">
+      <div class="container">
+        <h2>Variedad de clases</h2>
+        <p class="muted">CrossFit, Yoga, Spinning, HIIT y más: elige tu camino y nosotros te guiamos.</p>
+        <div class="programs reveal">
+          <article class="program">
+            <img loading="lazy" alt="Clase de CrossFit" src="https://images.unsplash.com/photo-1554284126-aa88f22d8b74?q=80&w=1200&auto=format&fit=crop" />
+            <div class="p-body">
+              <h3>CrossFit</h3>
+              <p class="muted">Fuerza y resistencia con movimientos funcionales a alta intensidad.</p>
+            </div>
+          </article>
+          <article class="program">
+            <img loading="lazy" alt="Clase de Yoga" src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=1200&auto=format&fit=crop" />
+            <div class="p-body">
+              <h3>Yoga</h3>
+              <p class="muted">Flexibilidad, enfoque y control de la respiración.</p>
+            </div>
+          </article>
+          <article class="program">
+            <img loading="lazy" alt="Clase de Spinning" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1200&auto=format&fit=crop" />
+            <div class="p-body">
+              <h3>Spinning</h3>
+              <p class="muted">Cardio explosivo con música y energía de grupo.</p>
+            </div>
+          </article>
+          <article class="program">
+            <img loading="lazy" alt="Entrenamiento HIIT" src="https://images.unsplash.com/photo-1546483875-ad9014c88eba?q=80&w=1200&auto=format&fit=crop" />
+            <div class="p-body">
+              <h3>HIIT</h3>
+              <p class="muted">Intervalos que disparan tu metabolismo en menos tiempo.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- OFERTA / URGENCIA -->
+    <section class="section">
+      <div class="container offer">
+        <div>
+          <h2>Oferta irresistible</h2>
+          <p class="muted">Clase de prueba <strong>GRATIS</strong> + <strong>50% de descuento</strong> en inscripción si te unes antes del <span id="deadline-text">domingo</span>.</p>
+          <div class="ticker">
+            <span class="pill">Quedan <span id="spots" class="spots">20</span> plazas este mes</span>
+            <span class="pill">Sin permanencia</span>
+            <span class="pill">Estacionamiento y regaderas</span>
+          </div>
+          <div class="countdown" aria-label="Cuenta regresiva oferta">
+            <div class="timebox"><div id="dd" style="font-size:26px;font-weight:800">00</div><div class="muted">Días</div></div>
+            <div class="timebox"><div id="hh" style="font-size:26px;font-weight:800">00</div><div class="muted">Horas</div></div>
+            <div class="timebox"><div id="mm" style="font-size:26px;font-weight:800">00</div><div class="muted">Min</div></div>
+            <div class="timebox"><div id="ss" style="font-size:26px;font-weight:800">00</div><div class="muted">Seg</div></div>
+          </div>
+          <div class="hero-ctas" style="margin-top:12px">
+            <a class="btn primary" href="#contacto">Inscríbete ahora</a>
+            <a class="btn" href="https://wa.me/521234567890?text=Hola,%20quiero%20aprovechar%20la%20oferta%20de%20inscripción%20%F0%9F%9A%80" target="_blank" rel="noopener">WhatsApp directo</a>
+          </div>
+        </div>
+        <div class="gallery reveal" aria-label="Instalaciones" style="display:block;">
+          <video muted playsinline loop  autoplay style="width:100%;border-radius:18px;">
+            <source src="https://cdn.pixabay.com/video/2024/02/15/200657-913478674_large.mp4" type="video/mp4" />
+            Tu navegador no soporta video HTML5.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section id="testimonios" class="section">
+      <div class="container">
+        <h2>Resultados de clientes</h2>
+        <p class="muted">Historias reales que inspiran. Verificados con nombre y foto.</p>
+        <div class="slider reveal" aria-roledescription="carrusel de testimonios">
+          <div class="track" id="track">
+            <article class="slide">
+              <div class="t-head"><img class="avatar" alt="Foto de Ana" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop" />
+                <div><strong>Ana R.</strong><div class="muted">Bajó 6 kg en 5 semanas</div></div></div>
+              <p class="quote">“Me guiaron con un plan que sí se adapta a mi horario. Las clases de HIIT son brutales y motivadoras.”</p>
+              <div class="stars" aria-label="5 estrellas">★★★★★</div>
+            </article>
+            <article class="slide">
+              <div class="t-head"><img class="avatar" alt="Foto de Carlos" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=200&auto=format&fit=crop" />
+                <div><strong>Carlos M.</strong><div class="muted">Subió 8 kg de masa magra</div></div></div>
+              <p class="quote">“Entrenadores con mucha calidad humana. Corrigieron mi técnica y por fin veo progreso.”</p>
+              <div class="stars" aria-label="5 estrellas">★★★★★</div>
+            </article>
+            <article class="slide">
+              <div class="t-head"><img class="avatar" alt="Foto de Sofía" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" />
+                <div><strong>Sofía L.</strong><div class="muted">Recuperó movilidad</div></div></div>
+              <p class="quote">“Yoga restaurativa + fuerza: combinación perfecta para mi espalda. El ambiente es increíble.”</p>
+              <div class="stars" aria-label="5 estrellas">★★★★★</div>
+            </article>
+            <article class="slide">
+              <div class="t-head"><img class="avatar" alt="Foto de Diego" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=200&auto=format&fit=crop" />
+                <div><strong>Diego P.</strong><div class="muted">Mejoró VO₂ máx</div></div></div>
+              <p class="quote">“El spinning con métricas me enganchó. Clases intensas y muy bien medidas.”</p>
+              <div class="stars" aria-label="5 estrellas">★★★★★</div>
+            </article>
+          </div>
+          <div class="dots" id="dots" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO / FORMULARIO SIMPLE -->
+    <section id="contacto" class="section">
+      <div class="container">
+        <h2>Agenda tu clase de prueba</h2>
+        <p class="muted">Deja tus datos y te contactamos en minutos. Solo pedimos lo esencial.</p>
+        <div class="grid3">
+          <form id="lead-form" class="card reveal" aria-label="Formulario de registro">
+            <div>
+              <label for="nombre">Nombre</label>
+              <input id="nombre" name="nombre" type="text" required placeholder="Tu nombre" autocomplete="name" />
+            </div>
+            <div>
+              <label for="telefono">Teléfono (WhatsApp)</label>
+              <input id="telefono" name="telefono" type="tel" required placeholder="55 1234 5678" autocomplete="tel" />
+            </div>
+            <div>
+              <label for="email">Email (opcional)</label>
+              <input id="email" name="email" type="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" />
+            </div>
+            <div>
+              <label for="interes">Interés</label>
+              <select id="interes" name="interes">
+                <option>Clase de prueba</option>
+                <option>Plan mensual</option>
+                <option>Plan anual</option>
+              </select>
+            </div>
+            <button class="btn primary" type="submit">Enviar y abrir WhatsApp</button>
+            <p class="privacy">Al enviar, aceptas ser contactad@ por WhatsApp. Sin spam. Cancelas cuando quieras.</p>
+            <output id="msg" class="muted" role="status" aria-live="polite"></output>
+          </form>
+          <div class="card reveal">
+            <h3>Atención inmediata</h3>
+            <p class="muted">¿Prefieres escribirnos ahora? Haz clic y abre chat directo.</p>
+            <p><a class="btn" href="https://wa.me/521234567890?text=Hola,%20quiero%20agendar%20mi%20clase%20de%20prueba" target="_blank" rel="noopener">WhatsApp Directo</a></p>
+            <p class="muted">Lunes a viernes 6:00–23:00, sábados 7:00–20:00.</p>
+          </div>
+          <div class="card reveal">
+            <h3>Encuéntranos</h3>
+            <p class="muted">Av. Ejemplo 123, Col. Centro, Tu Ciudad</p>
+            <div style="border-radius:12px; overflow:hidden; margin-bottom:12px;">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d191562.48916040565!2d1.8283403965589207!3d41.39224697642939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a49816718e30e5%3A0x44b0fb3d4f47660a!2sBarcelona%2C%20Espa%C3%B1a!5e0!3m2!1ses-419!2smx!4v1756221278110!5m2!1ses-419!2smx"
+                width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <p class="muted">Estacionamiento propio y acceso por transporte público.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        © <span id="year"></span> GYM PRO. Sitio de demostración por 
+        <a href="https://www.facebook.com/profile.php?id=61573463732776&locale=es_LA" target="_blank" rel="noopener" style="color:#5dd39e; font-weight:700; text-decoration:underline;">
+          ¡Órale Web!
+        </a>
+        
+      </p>
+    </div>
+  </footer>
+
+  <!-- Sticky CTA (mobile) -->
+  <div class="sticky-cta" aria-hidden="true">
+    <div class="inner">
+      <a href="#contacto">Prueba gratis</a>
+      <a href="https://wa.me/521234567890?text=Hola%2C%20quiero%20mi%20clase%20de%20prueba%20%F0%9F%92%AA" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- JSON-LD SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HealthClub",
+    "name": "GYM PRO",
+    "address": {"@type":"PostalAddress","streetAddress":"Av. Ejemplo 123","addressLocality":"Ciudad","addressRegion":"MX"},
+    "telephone": "+52 123 456 7890",
+    "image": ["https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop"],
+    "openingHours": "Mo-Sa 06:00-23:00",
+    "priceRange": "$$",
+    "url": "https://tu-dominio.com/gym-pro"
+  }
+  </script>
+
+  <script>
+    // Helpers
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+    // Smooth scroll for header CTA
+    $$('[data-scroll], .nav a, .sticky-cta a, .hero-ctas a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('data-scroll') || a.getAttribute('href');
+        if (id && id.startsWith('#')) {
+          e.preventDefault();
+          $(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      })
+    })
+
+    // Reveal on scroll (IntersectionObserver)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in') })
+    }, { threshold: .12 });
+    $$('.reveal').forEach(el => io.observe(el));
+
+    // Countdown to próximo domingo 23:59:59
+    function nextSunday() {
+      const now = new Date();
+      const day = now.getDay(); // 0 Domingo
+      const diff = (7 - day) % 7; // días hasta domingo
+      const target = new Date(now);
+      target.setDate(now.getDate() + (diff === 0 ? 7 : diff));
+      target.setHours(23,59,59,999);
+      return target;
+    }
+
+    const deadline = nextSunday();
+    const fmt = (n) => String(n).padStart(2,'0');
+    const deadlineText = deadline.toLocaleDateString('es-MX', { weekday:'long', day:'2-digit', month:'long' });
+    $('#deadline-text').textContent = deadlineText;
+
+    const tick = () => {
+      const now = new Date();
+      const s = Math.max(0, Math.floor((deadline - now)/1000));
+      const d = Math.floor(s / 86400);
+      const h = Math.floor((s % 86400) / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      const ss = s % 60;
+      $('#dd').textContent = fmt(d);
+      $('#hh').textContent = fmt(h);
+      $('#mm').textContent = fmt(m);
+      $('#ss').textContent = fmt(ss);
+    }
+    tick(); setInterval(tick, 1000);
+
+    // Spots left (persist per navegador)
+    const SPOTS_KEY = 'gym_spots_left';
+    let spots = Number(localStorage.getItem(SPOTS_KEY)) || 20;
+    // Simulación: reduce 1-2 plazas por día local al cargar por primera vez
+    const DAY_KEY = 'gym_spots_day';
+    const today = new Date().toDateString();
+    const lastDay = localStorage.getItem(DAY_KEY);
+    if (lastDay !== today) {
+      spots = Math.max(5, spots - Math.floor(Math.random()*2 + 1));
+      localStorage.setItem(DAY_KEY, today);
+      localStorage.setItem(SPOTS_KEY, spots);
+    }
+    $('#spots').textContent = spots;
+
+    // Testimonios: auto-slide
+    const track = $('#track');
+    const dots = $('#dots');
+    const slides = $$('.slide', track);
+    slides.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.addEventListener('click', () => goTo(i));
+      dots.appendChild(b);
+    });
+    let idx = 0; let timer;
+    const updateDots = () => $$('#dots button').forEach((b,i)=> b.classList.toggle('active', i===idx));
+    const goTo = (i) => {
+      idx = i % slides.length; if (idx<0) idx = slides.length-1;
+      const x = slides[idx].offsetLeft - track.offsetLeft;
+      track.scrollTo({ left: x, behavior: 'smooth' });
+      updateDots();
+    }
+    const auto = () => { clearInterval(timer); timer = setInterval(()=> goTo(idx+1), 4000) }
+    track.addEventListener('scroll', () => {
+      const mid = track.scrollLeft + track.clientWidth/2;
+      const near = slides.reduce((a,el,i) => {
+        const cx = el.offsetLeft + el.clientWidth/2; const d = Math.abs(cx - mid);
+        return d < a.d ? {i, d} : a;
+      }, {i:0, d:1e9});
+      if (near.i !== idx) { idx = near.i; updateDots(); }
+    });
+    updateDots(); auto();
+
+    // Form: open WhatsApp with prefill
+    $('#lead-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+      const phoneGym = '521234567890'; // <— Reemplaza con el número real (código país + número)
+      const texto = `Hola, soy ${data.nombre}. Quiero ${data.interes}. Mi WhatsApp es ${data.telefono}${data.email ? ` y mi email ${data.email}` : ''}.`;
+      const url = `https://wa.me/${phoneGym}?text=${encodeURIComponent(texto)}`;
+      $('#msg').textContent = 'Abriendo WhatsApp…';
+      window.open(url, '_blank');
+    });
+
+    // Año footer
+    $('#year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

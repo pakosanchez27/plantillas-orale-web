@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>¡Vámonos Travel! — Viaja sin complicaciones</title>
+  <meta name="description" content="Agencia de viajes en México. Paquetes, vuelos, hoteles y tours. Cotiza por WhatsApp y reserva fácil." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f5fbff; --surface:#ffffff; --ink:#0f1b2a; --muted:#567086;
+      --brand:#0e507e; --brand-2:#4db2d6; --accent:#ffd166; --ok:#1b7f4b;
+      --shadow:0 10px 30px rgba(15,27,42,.16);
+      --container:1200px; --radius:16px; --space-1:6px; --space-2:10px; --space-3:14px; --space-4:18px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:96px; --space-10:128px;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.6}
+    img{max-width:100%;display:block;border-radius:12px}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(100%,var(--container));margin-inline:auto;padding:0 var(--space-3)}
+    :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+    /* === NAV TRANSPARENTE SOBRE HERO === */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;background:rgba(14,80,126,.28);backdrop-filter:blur(6px) saturate(130%);border-bottom:1px solid rgba(255,255,255,.18);transition:background .25s ease, border-color .25s ease}
+    .nav.scrolled{background:rgba(14,80,126,.65);border-color:rgba(255,255,255,.25)}
+    .nav-wrap{width:min(100%,var(--container));margin:auto;display:flex;align-items:center;justify-content:space-between;padding:10px var(--space-3)}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.35)}
+    .mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:#fff;box-shadow:var(--shadow)}
+    .menu{display:flex;gap:10px}
+    .menu a{padding:8px 10px;border-radius:10px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.35)}
+    .menu a:hover{background:rgba(255,255,255,.12)}
+    .cta{display:flex;gap:8px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;font-weight:600;border:1px solid transparent;cursor:pointer;transition:.2s}
+    .btn-primary{background:#ffffff;color:#0e507e;box-shadow:var(--shadow)}
+    .btn-ghost{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff}
+    .hamb{display:none;background:none;border:0;font-size:1.4rem;padding:8px;color:#fff}
+
+    /* === HERO FULLSCREEN CON SLIDES DE PAISAJES === */
+    header.hero{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden}
+    .slides{position:absolute;inset:0;z-index:-2}
+    .slide{position:absolute;inset:0;background-position:center;background-size:cover;opacity:0;animation:fade 30s infinite}
+    .slide:nth-child(1){background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2000&auto=format&fit=crop');animation-delay:0s}
+    .slide:nth-child(2){background-image:url('https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=2000&auto=format&fit=crop');animation-delay:10s}
+    .slide:nth-child(3){background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000&auto=format&fit=crop');animation-delay:20s}
+    @keyframes fade{0%,33%{opacity:1} 40%,93%{opacity:0} 100%{opacity:0}}
+
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.45),rgba(0,0,0,.25) 40%,rgba(0,0,0,.4));pointer-events:none;z-index:1}
+    .hero-inner{width:min(100%,var(--container));text-align:center;color:#fff;padding:var(--space-7) var(--space-3);position:relative;z-index:2}
+    .eyebrow{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.2);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.25)}
+    h1{font-family:"Playfair Display",serif;font-size:clamp(2.4rem,7vw,4rem);line-height:1.1;margin:12px 0;text-shadow:0 8px 30px rgba(0,0,0,.5)}
+    .hero-sub{max-width:60ch;margin:0 auto 16px;color:#f1f6fa;text-shadow:0 6px 20px rgba(0,0,0,.4)}
+    .hero-ctas{display:inline-flex;align-items:center;gap:8px;justify-content:center;margin-top:14px;padding:6px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px)}
+    .hero-ctas .btn{border-radius:999px;box-shadow:none}
+    .hero-ctas .btn-primary{background:#fff;color:#0e507e;border-color:transparent}
+    .hero-ctas .btn-ghost{background:transparent;border-color:rgba(255,255,255,.6);color:#fff}
+    .hero-ctas .btn:hover{transform:translateY(-1px)}
+    .hero-ctas .btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+    .scroll-cue{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#fff;opacity:.9;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:6px}
+    .scroll-cue small{background:transparent}
+    .mouse{width:20px;height:30px;border:2px solid #fff;border-radius:12px;position:relative}
+    .mouse::after{content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);width:3px;height:6px;background:#fff;border-radius:999px;animation:wheel 1.4s infinite}
+    @keyframes wheel{0%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,10px)}}
+
+    /* === SECCIONES === */
+    section{padding:var(--space-9) 0;background:var(--bg);scroll-margin-top:80px}
+    :where(section)+:where(section){margin-top:var(--space-9)}
+    .section-title{font-family:"Playfair Display",serif;font-size:clamp(1.9rem,3.5vw,2.4rem);margin:0 0 10px}
+    .section-lead{color:var(--muted);max-width:70ch;margin:0 0 22px}
+
+    /* === WIDGET DE COTIZACIÓN COMPACTO === */
+    .booking{background:var(--surface);border:1px solid rgba(0,0,0,.06);border-radius:16px;box-shadow:var(--shadow);padding:14px;margin-top:0}
+    .booking-grid{display:grid;grid-template-columns:1fr;gap:10px}
+    .booking .field{display:grid;gap:6px}
+    .booking label{font-weight:600}
+    .booking input,.booking select{padding:12px;border-radius:12px;border:1px solid #d5e9f3;background:#fff}
+
+    /* === CARDS DE PAQUETES === */
+    .filters{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+    .filters input[type="search"]{padding:12px 14px;border-radius:999px;border:1px solid #d5e9f3;background:#fff}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}
+    .pill{border:1px solid #d5e9f3;background:#fff;border-radius:999px;padding:8px 12px;font-weight:600;cursor:pointer}
+    .pill.active,.pill:hover{background:#e7f4fb;border-color:#bfe3f2}
+
+    .pkg-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .pkg{background:var(--surface);border:1px solid rgba(0,0,0,.06);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+    .pkg-media{height:200px;overflow:hidden}
+    .pkg-body{padding:12px}
+    .pkg-head{display:flex;justify-content:space-between;align-items:baseline}
+    .price{font-weight:800;color:var(--brand)}
+    .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+
+    /* === GALERÍA === */
+    .gallery{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
+    .lightbox img{max-height:90vh;border-radius:16px}
+
+    /* === FOOTER (nuevo) === */
+    footer{background:radial-gradient(1200px 600px at 50% -200px,#0e507e 0,#0b3c5d 60%,#072a40 100%);color:#eaf6ff;padding:48px 0 40px;border-top:0}
+    .footer-wrap{display:grid;grid-template-columns:1fr;gap:16px}
+    .footer-col h4{margin:0 0 8px}
+    .footer-col a{color:#cfe9f7}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;color:#b8d5e6}
+    @media (min-width:720px){ .footer-wrap{grid-template-columns:2fr 1fr 1fr 1fr} }
+
+    /* === Responsive === */
+    @media (min-width:720px){
+      .booking-grid{grid-template-columns:repeat(5,1fr)}
+      .pkg-grid{grid-template-columns:repeat(3,1fr)}
+      .gallery{grid-template-columns:repeat(4,1fr)}
+      .f-grid{grid-template-columns:2fr 1fr 1fr}
+    }
+
+    @media (max-width:900px){
+      .menu{position:fixed;inset:60px 10px auto 10px;flex-direction:column;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);border-radius:16px;padding:10px;border:1px solid rgba(255,255,255,.25);display:none}
+      .menu.open{display:flex}
+      .hamb{display:inline-grid;place-items:center}
+      .cta{display:none}
+    }
+      /* === DESTINOS grid === */
+    .dest-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .dest{position:relative;display:block;padding:18px;border-radius:16px;min-height:180px;overflow:hidden;color:#fff}
+    .dest::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.1),rgba(0,0,0,.55));z-index:0}
+    .dest{background-image:var(--img);background-size:cover;background-position:center}
+    .dest .tag{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.2);backdrop-filter:blur(4px);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.25)}
+    .dest strong,.dest small{position:relative;z-index:1;text-shadow:0 10px 30px rgba(0,0,0,.45)}
+    .dest .content{position:absolute;left:14px;right:14px;bottom:14px;display:flex;flex-direction:column;gap:4px}
+    .dest strong{margin:0;line-height:1.2}
+    .dest small{display:block;opacity:.95}
+    .dest .tag{z-index:2}
+    .dest strong{display:block;font-size:1.3rem;margin-top:8px}
+    .dest small{opacity:.95}
+
+    @media (min-width:720px){ .dest-grid{grid-template-columns:repeat(3,1fr)} }
+
+      /* === CONTACTO mejorado === */
+    .contact-wrap{display:grid;grid-template-columns:1fr;gap:12px}
+    .contact-card{background:var(--surface);border:1px solid rgba(0,0,0,.06);border-radius:16px;box-shadow:var(--shadow);padding:14px}
+    .form-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .field{display:grid;gap:6px}
+    label{font-weight:600}
+    input,select,textarea{padding:12px;border-radius:12px;border:1px solid #d5e9f3;background:#fff}
+    input:focus,select:focus,textarea:focus{border-color:var(--brand-2);box-shadow:0 0 0 4px rgba(77,178,214,.15)}
+    .hint{color:var(--muted)}
+    .row-between{display:flex;justify-content:space-between;align-items:center}
+    .err{color:#a12a2a;min-height:16px}
+    .invalid{border-color:#a12a2a}
+    .check{display:flex;gap:8px;align-items:center}
+    .aside-title{margin:0 0 6px;font-weight:800}
+    .mini{margin:0;padding-left:18px}
+
+    @media (min-width:900px){
+      .contact-wrap{grid-template-columns:1.2fr .8fr}
+      .form-grid{grid-template-columns:repeat(4,1fr)}
+      .form-grid .field:nth-child(1){grid-column:span 2}
+      .form-grid .field:nth-child(2){grid-column:span 2}
+      .form-grid .field:nth-child(3){grid-column:span 2}
+      .form-grid .field:nth-child(4){grid-column:span 2}
+    }
+
+      /* === NAV móvil abierto sobre fondo === */
+    @media (max-width:900px){
+      .menu{background:rgba(14,80,126,.85)!important;border-color:rgba(255,255,255,.25)!important}
+      .menu a{color:#fff}
+    }
+
+    /* === Separación Contacto vs Footer === */
+    #contacto{padding-bottom:var(--space-10);margin-bottom:var(--space-10)}
+
+    /* === Estilos Tips (aside) === */
+    .contact-aside{display:grid;gap:12px}
+    .aside-block{background:linear-gradient(180deg,#f0faff 0%, #ffffff 100%);border:1px solid #d5e9f3;border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+    .aside-block+.aside-block{margin-top:8px}
+    .mini{list-style:none;padding-left:0}
+    .mini li{position:relative;padding-left:26px;margin:6px 0}
+    .mini li::before{content:'✓';position:absolute;left:0;top:2px;width:18px;height:18px;border-radius:999px;display:grid;place-items:center;background:#dff4ff;color:#0e507e;font-weight:800;font-size:12px}
+
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Navegación principal">
+    <div class="nav-wrap">
+      <a href="#" class="brand" aria-label="Inicio ¡Vámonos Travel!"><span class="mark">VT</span><span>¡Vámonos Travel!</span></a>
+      <button class="hamb" aria-label="Abrir menú" id="hamb">☰</button>
+      <div class="menu" id="menu">
+        <a href="#paquetes">Paquetes</a>
+        <a href="#booking">Cotizar</a>
+        <a href="#destinos">Destinos</a>
+        <a href="#galeria">Galería</a>
+        <a href="#reseñas">Reseñas</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="cta">
+        <a class="btn btn-ghost" href="#paquetes">Ver paquetes</a>
+        <a class="btn btn-primary" href="https://wa.me/5215555555555?text=Hola%20quiero%20cotizar%20un%20viaje" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="home">
+    <div class="slides" aria-hidden="true">
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+    </div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <span class="eyebrow">Agencia de viajes • México</span>
+      <h1>Explora playas, montañas y ciudades icónicas</h1>
+      <p class="hero-sub">Paquetes a la medida, vuelos, hoteles y tours. <strong>Respuesta por WhatsApp en minutos</strong>.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#booking">Arma tu viaje</a>
+        <a class="btn btn-ghost" href="#paquetes">Ver paquetes</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="booking" class="container">
+      <h2 class="section-title">Arma tu viaje</h2>
+      <p class="section-lead">Elige destino, fechas y viajeros. Te mandamos la cotización por WhatsApp.</p>
+      <form class="booking" id="bookingForm" novalidate>
+        <div class="booking-grid">
+          <div class="field"><label for="destino">Destino</label><select id="destino" required><option value="" disabled selected>Selecciona destino</option><option>Cancún</option><option>Huatulco</option><option>Los Cabos</option><option>Oaxaca</option><option>CDMX</option><option>Disney Orlando</option></select></div>
+          <div class="field"><label for="checkin">Check-in</label><input id="checkin" type="date" required></div>
+          <div class="field"><label for="checkout">Check-out</label><input id="checkout" type="date" required></div>
+          <div class="field"><label for="viajeros">Viajeros</label><select id="viajeros" required><option>2</option><option>1</option><option>3</option><option>4</option><option>5</option></select></div>
+          <div class="field"><label for="presupuesto">Presupuesto (MXN)</label><input id="presupuesto" type="number" placeholder="Ej. 15000"></div>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+          <button class="btn" type="reset">Limpiar</button>
+          <button class="btn btn-primary" type="submit">Solicitar cotización</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="paquetes" class="container">
+      <h2 class="section-title">Paquetes destacados</h2>
+      <p class="section-lead">Ofertas y escapadas populares. Agrega a tu cotización y envíala por WhatsApp.</p>
+      <div class="filters" role="toolbar" aria-label="Filtros de paquetes">
+        <input id="pkgSearch" type="search" placeholder="Buscar (ej. playa, todo incluido, tour)" aria-label="Buscar paquetes" />
+        <div class="pills" id="pkgPills">
+          <button class="pill active" data-filter="all">Todo</button>
+          <button class="pill" data-filter="playa">Playa</button>
+          <button class="pill" data-filter="ciudad">Ciudad</button>
+          <button class="pill" data-filter="familiar">Familiar</button>
+          <button class="pill" data-filter="romantico">Romántico</button>
+          <button class="pill" data-filter="todo-incluido">Todo incluido</button>
+        </div>
+      </div>
+      <div class="pkg-grid" id="pkgGrid" aria-live="polite">
+        <article class="pkg" data-cat="playa todo-incluido">
+          <div class="pkg-media"><img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1400&auto=format&fit=crop" alt="Resort frente al mar"></div>
+          <div class="pkg-body"><div class="pkg-head"><strong>Cancún 4D/3N Todo Incluido</strong><span class="price" data-price="8999">Desde $8,999</span></div><p>Vuelo redondo, hotel 4★, traslados y alimentos incluidos.</p><div class="actions"><button class="btn btn-primary add" data-item="Cancún 4D/3N Todo Incluido" data-price="8999">Cotizar por WhatsApp</button></div></div>
+        </article>
+        <article class="pkg" data-cat="ciudad romantico">
+          <div class="pkg-media"><img src="https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?q=80&w=1400&auto=format&fit=crop" alt="Centro histórico de ciudad"></div>
+          <div class="pkg-body"><div class="pkg-head"><strong>Oaxaca Cultural 3D/2N</strong><span class="price" data-price="5990">Desde $5,990</span></div><p>Hotel boutique, tour Monte Albán y mezcalería.</p><div class="actions"><button class="btn btn-primary add" data-item="Oaxaca Cultural 3D/2N" data-price="5990">Cotizar por WhatsApp</button></div></div>
+        </article>
+        <article class="pkg" data-cat="familiar playa">
+          <div class="pkg-media"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1400&auto=format&fit=crop" alt="Familia en la playa"></div>
+          <div class="pkg-body"><div class="pkg-head"><strong>Los Cabos Familiar 5D/4N</strong><span class="price" data-price="11490">Desde $11,490</span></div><p>Hotel 4★, desayuno, avistamiento de ballenas (temporada).</p><div class="actions"><button class="btn btn-primary add" data-item="Los Cabos Familiar 5D/4N" data-price="11490">Cotizar por WhatsApp</button></div></div>
+        </article>
+      </div>
+      </section>
+
+    <section id="destinos" class="container">
+      <h2 class="section-title">Destinos populares</h2>
+      <p class="section-lead">Elige por tipo de viaje. Mejores épocas, clima y tips incluidos.</p>
+      <div class="dest-grid">
+        <a class="dest" href="#booking" style="--img:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1400&auto=format&fit=crop')">
+          <span class="tag">Playa</span>
+          <span class="content"><strong>Cancún</strong><small>Todo incluido • Mayo–Sep</small></span>
+        </a>
+        <a class="dest" href="#booking" style="--img:url('https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?q=80&w=1400&auto=format&fit=crop')">
+          <span class="tag">Cultura</span>
+          <span class="content"><strong>Oaxaca</strong><small>Gastronomía • Todo el año</small></span>
+        </a>
+        <a class="dest" href="#booking" style="--img:url('https://images.unsplash.com/photo-1493558103817-58b2924bce98?q=80&w=1400&auto=format&fit=crop')">
+          <span class="tag">Ciudad</span>
+          <span class="content"><strong>CDMX</strong><small>Museos • Oct–Mar</small></span>
+        </a>
+        <a class="dest" href="#booking" style="--img:url('https://images.unsplash.com/photo-1499696010180-025ef6e1a8f6?q=80&w=1400&auto=format&fit=crop')">
+          <span class="tag">Familiar</span>
+          <span class="content"><strong>Los Cabos</strong><small>Ballenas • Dic–Abr</small></span>
+        </a>
+        <a class="dest" href="#booking" style="--img:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1400&auto=format&fit=crop')">
+          <span class="tag">Parques</span>
+          <span class="content"><strong>Orlando</strong><small>Temporada baja • Sep</small></span>
+        </a>
+        <a class="dest" href="#booking" style="--img:url('https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1400&auto=format&fit=crop')">
+          <span class="tag">Europa</span>
+          <span class="content"><strong>París</strong><small>City break • Abr–Jun</small></span>
+        </a>
+      </div>
+    </section>
+
+    <section id="galeria" class="container">
+      <h2 class="section-title">Galería</h2>
+      <p class="section-lead">Inspírate con fotos de nuestros viajeros.</p>
+      <div class="gallery">
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=900&auto=format&fit=crop" alt="Pareja en mirador" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?q=80&w=900&auto=format&fit=crop" alt="Hotel con alberca" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1499696010180-025ef6e1a8f6?q=80&w=900&auto=format&fit=crop" alt="Tour en barco" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=900&auto=format&fit=crop" alt="Calles coloniales" loading="lazy">
+      </div>
+      <div class="lightbox" id="lightbox" aria-modal="true" role="dialog"><img id="lightboxImg" alt="Vista ampliada"></div>
+    </section>
+
+    <section id="reseñas" class="container">
+      <h2 class="section-title">Reseñas</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+        <article class="pkg"><div class="pkg-body"><strong>Ana M.</strong><p>★★★★★</p><p>Nos ayudaron con todo. El viaje a Cancún salió perfecto.</p></div></article>
+        <article class="pkg"><div class="pkg-body"><strong>Mario G.</strong><p>★★★★★</p><p>Excelente atención y precio para Disney.</p></div></article>
+        <article class="pkg"><div class="pkg-body"><strong>Luz R.</strong><p>★★★★☆</p><p>Respuesta rápida y opciones claras.</p></div></article>
+      </div>
+    </section>
+
+    <section id="contacto" class="container">
+      <h2 class="section-title">Contacto</h2>
+      <p class="section-lead">Cuéntanos tu plan: destino, fechas y número de viajeros. Te respondemos en minutos por WhatsApp o email.</p>
+
+      <div class="contact-wrap">
+        <!-- Formulario -->
+        <form id="contactForm" class="contact-card" action="https://formspree.io/f/xxxxxxx" method="POST" novalidate>
+          <input type="text" name="_hp" id="hp_field" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px" />
+
+          <div class="form-grid">
+            <div class="field"><label for="nombre">Nombre</label><input id="nombre" name="nombre" autocomplete="name" required placeholder="Tu nombre"><small class="hint">Como aparece en tu identificación</small><small class="err" id="err-nombre"></small></div>
+
+            <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="tu@correo.com"><small class="hint">Para enviarte la cotización</small><small class="err" id="err-email"></small></div>
+
+            <div class="field"><label for="telefono">Teléfono (opcional)</label><input id="telefono" name="telefono" type="tel" inputmode="tel" autocomplete="tel" placeholder="55 1234 5678" pattern="^[0-9\s+()-]{8,}$"><small class="hint">Por si prefieres llamada o WhatsApp</small><small class="err" id="err-telefono"></small></div>
+
+            <div class="field"><label for="asunto">Motivo</label><select id="asunto" name="asunto" required><option value="" selected disabled>Selecciona</option><option>Cotización</option><option>Pago</option><option>Factura</option><option>Otro</option></select><small class="err" id="err-asunto"></small></div>
+          </div>
+
+          <div class="field"><label for="mensaje">Mensaje</label><textarea id="mensaje" name="mensaje" rows="6" maxlength="500" required placeholder="Fechas, destino, número de viajeros, presupuesto aproximado…"></textarea><div class="row-between"><small class="hint">Máx. 500 caracteres</small><small id="msgCount">0/500</small></div><small class="err" id="err-mensaje"></small></div>
+
+          <div class="field"><label class="check"><input type="checkbox" id="consent" required> Acepto la <a href="#">política de privacidad</a></label><small class="err" id="err-consent"></small></div>
+
+          <div class="actions-line">
+            <button class="btn btn-primary" type="submit" id="sendBtn">Enviar</button>
+            <a class="btn" href="https://wa.me/5215555555555?text=Hola%20quiero%20cotizar%20mi%20viaje" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+          <div class="alert" id="formAlert" role="status" aria-live="polite" hidden></div>
+        </form>
+
+        <!-- Lateral con info y CTA -->
+        <aside class="contact-aside contact-card" aria-label="Opciones de contacto">
+          <div class="aside-block">
+            <h3 class="aside-title">Atención rápida</h3>
+            <p>Horarios: Lun–Sáb 9:00–19:00 (CDMX)</p>
+            <a class="btn btn-primary" href="https://wa.me/5215555555555?text=Hola%20quiero%20cotizar%20mi%20viaje" target="_blank" rel="noopener">💬 Escribir por WhatsApp</a>
+          </div>
+          <div class="aside-block">
+            <h3 class="aside-title">Tips para cotizar</h3>
+            <ul class="mini">
+              <li>Fechas aproximadas de viaje</li>
+              <li>Origen y destino</li>
+              <li>Número de viajeros y edades</li>
+              <li>Presupuesto estimado</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-wrap">
+      <div class="footer-col">
+        <div class="brand" style="margin-bottom:6px;color:#fff"><span class="mark">VT</span><span>¡Vámonos Travel!</span></div>
+        <p>Planeamos viajes memorables con soporte 24/7 y pagos flexibles.</p>
+        <form onsubmit="event.preventDefault(); alert('Gracias por suscribirte ✈️');">
+          <div style="display:grid;grid-template-columns:1fr auto;gap:8px"><input type="email" placeholder="Tu email" required style="background:#fff;border-radius:12px;padding:12px"><button class="btn btn-primary" type="submit">Suscribirme</button></div>
+        </form>
+      </div>
+      <div class="footer-col">
+        <h4>Explora</h4>
+        <nav class="f-nav" style="display:grid;gap:6px">
+          <a href="#paquetes">Paquetes</a>
+          <a href="#destinos">Destinos</a>
+          <a href="#galeria">Galería</a>
+          <a href="#reseñas">Reseñas</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <div style="display:grid;gap:6px">
+          <a href="mailto:hola@vamonos.travel">hola@vamonos.travel</a>
+          <a href="https://wa.me/5215555555555" target="_blank" rel="noopener">WhatsApp: +52 55 5555 5555</a>
+          <span>CDMX, México</span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <div style="display:grid;gap:6px">
+          <a href="#">Aviso de privacidad</a>
+          <a href="#">Términos y condiciones</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <small>© <span id="ycopy"></span> ¡Vámonos Travel!</small>
+      <div style="display:flex;gap:10px"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Menú móvil sobre hero
+    const hamb = document.getElementById('hamb');
+    const menu = document.getElementById('menu');
+    hamb?.addEventListener('click', ()=> menu.classList.toggle('open'));
+
+    // Cambia fondo de nav al hacer scroll
+    const navEl = document.querySelector('.nav');
+    const onScrollNav = ()=>{ if(window.scrollY>10){ navEl.classList.add('scrolled'); } else { navEl.classList.remove('scrolled'); } };
+    onScrollNav();
+    window.addEventListener('scroll', onScrollNav);
+
+    // Booking -> WhatsApp
+    const bookingForm = document.getElementById('bookingForm');
+    bookingForm?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const d = document.getElementById('destino').value;
+      const ci = document.getElementById('checkin').value;
+      const co = document.getElementById('checkout').value;
+      const v = document.getElementById('viajeros').value;
+      const p = document.getElementById('presupuesto').value || '—';
+      if(!d || !ci || !co || !v){ alert('Completa destino y fechas'); return; }
+      const msg = encodeURIComponent(`Hola, quiero cotizar:\nDestino: ${d}\nCheck-in: ${ci}\nCheck-out: ${co}\nViajeros: ${v}\nPresupuesto: ${p}`);
+      window.open(`https://wa.me/5215555555555?text=${msg}`, '_blank');
+    });
+
+    // Filtros paquetes
+    const pkgGrid = document.getElementById('pkgGrid');
+    const pkgSearch = document.getElementById('pkgSearch');
+    const pkgPills = document.getElementById('pkgPills');
+    const pkgs = ()=> Array.from(pkgGrid.querySelectorAll('.pkg'));
+    function applyPkgFilters(){
+      const q = (pkgSearch?.value || '').toLowerCase();
+      const active = pkgPills?.querySelector('.pill.active')?.dataset.filter || 'all';
+      pkgs().forEach(card=>{
+        const text = card.textContent.toLowerCase();
+        const cat = card.dataset.cat || '';
+        const hit = text.includes(q) && (active==='all' || cat.split(' ').includes(active));
+        card.style.display = hit ? '' : 'none';
+      });
+    }
+    pkgSearch?.addEventListener('input', applyPkgFilters);
+    pkgPills?.addEventListener('click',(e)=>{ if(e.target.classList.contains('pill')){ pkgPills.querySelectorAll('.pill').forEach(p=>p.classList.remove('active')); e.target.classList.add('active'); applyPkgFilters(); } });
+
+    // Enviar paquete individual por WhatsApp
+    document.addEventListener('click',(e)=>{
+      const btn = e.target.closest('.add');
+      if(!btn) return;
+      const name = btn.dataset.item; const price = parseInt(btn.dataset.price,10)||0;
+      const msg = encodeURIComponent(`Hola, me interesa el paquete: ${name} (Desde $${price}). ¿Me compartes más detalles?`);
+      window.open(`https://wa.me/5215555555555?text=${msg}`, '_blank');
+    });
+
+    // Lightbox galería
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg');
+    document.querySelectorAll('#galeria img').forEach(img=>{ img.addEventListener('click',()=>{ lbImg.src = img.src; lb.style.display='flex'; }) });
+    lb?.addEventListener('click', ()=> lb.style.display='none');
+
+    // Contacto mejorado
+    const cForm = document.getElementById('contactForm');
+    const sendBtn = document.getElementById('sendBtn');
+    const formAlert = document.getElementById('formAlert');
+    const msg = document.getElementById('mensaje');
+    const msgCount = document.getElementById('msgCount');
+
+    // Contador de caracteres
+    const updateCount = ()=>{ msgCount.textContent = `${msg.value.length}/500`; };
+    msg?.addEventListener('input', updateCount); updateCount();
+
+    function setAlert(type,txt){ formAlert.hidden=false; formAlert.className = 'alert ' + (type==='ok'?'ok':'err'); formAlert.textContent = txt; }
+    function clearErrors(){ document.querySelectorAll('#contactForm .err').forEach(e=>e.textContent=''); document.querySelectorAll('#contactForm .invalid').forEach(e=>e.classList.remove('invalid')); }
+    function validate(){
+      clearErrors(); let ok=true; let first=null;
+      const req=[['nombre','Escribe tu nombre'],['email','Email válido'],['asunto','Selecciona un motivo'],['mensaje','Escribe tu mensaje']];
+      req.forEach(([id,msg])=>{ const el=document.getElementById(id); if(!el.checkValidity()){ document.getElementById('err-'+id).textContent=msg; el.classList.add('invalid'); ok=false; if(!first) first=el; }});
+      const tel=document.getElementById('telefono'); if(tel.value && !tel.checkValidity()){ document.getElementById('err-telefono').textContent='Teléfono inválido'; tel.classList.add('invalid'); ok=false; if(!first) first=tel; }
+      const consent=document.getElementById('consent'); if(!consent.checked){ document.getElementById('err-consent').textContent='Debes aceptar la política'; ok=false; if(!first) first=consent; }
+      if(first) first.focus(); return ok;
+    }
+
+    cForm?.addEventListener('submit', async (e)=>{
+      e.preventDefault(); formAlert.hidden=true; if(document.getElementById('hp_field')?.value){ return; }
+      if(!validate()) return;
+      try{ sendBtn.disabled=true; sendBtn.textContent='Enviando…';
+        const data=new FormData(cForm);
+        if(cForm.action.includes('/f/')){ const r=await fetch(cForm.action,{method:'POST',body:data,headers:{'Accept':'application/json'}}); if(!r.ok) throw new Error('Error'); setAlert('ok','¡Gracias! Te contactaremos pronto.'); cForm.reset(); updateCount(); }
+        else { setAlert('ok','Gracias por tu mensaje.'); cForm.reset(); updateCount(); }
+      } catch(err){ setAlert('err','No pudimos enviar tu mensaje. Intenta de nuevo o usa WhatsApp.'); }
+      finally{ sendBtn.disabled=false; sendBtn.textContent='Enviar'; }
+    });
+  </script>
+</body>
+</html>

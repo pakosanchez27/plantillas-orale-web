@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>¡Órale Café! — El mejor café de CDMX</title>
+  <meta name="description" content="Cafetería artesanal en CDMX. Ordena en línea por WhatsApp, ve el menú y conoce nuestra historia." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Design System (UX) ===== */
+    :root{
+      /* Colors */
+      --bg:#fcf8f3; --surface:#ffffff; --ink:#26160f; --muted:#6d5445;
+      --brand:#5a3b28; --brand-2:#b4835a; --accent:#c9915b; --ok:#1b7f4b; --warn:#a45522;
+      /* Elevation */
+      --shadow:0 10px 30px rgba(38,22,15,.12);
+      /* Layout */
+      --container:1200px; --radius:16px; --space-1:6px; --space-2:10px; --space-3:14px; --space-4:18px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:96px; --space-10:128px;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.6}
+    img{max-width:100%;display:block;border-radius:12px}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(100%,var(--container));margin-inline:auto;padding:0 var(--space-3)}
+    .visually-hidden{position:absolute!important;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}
+    :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+    /* ===== Top Bar & Nav ===== */
+    .skip{position:absolute;left:-9999px;top:auto}
+    .skip:focus{left:10px;top:10px;background:var(--surface);padding:10px;border-radius:10px;z-index:999}
+    .nav{position:sticky;top:0;z-index:50;background:rgba(252,248,243,.7);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid rgba(0,0,0,.05)}
+    .nav-wrap{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+    .mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:#fff;box-shadow:var(--shadow)}
+    .menu{display:flex;gap:12px}
+    .menu a{padding:8px 10px;border-radius:10px}
+    .menu a:hover,.menu a[aria-current="true"]{background:#efe3d7}
+    .cta{display:flex;gap:8px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;font-weight:600;border:1px solid transparent;cursor:pointer;transition:.2s}
+    .btn-primary{background:var(--brand);color:#fff;box-shadow:var(--shadow)}
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-ghost{border-color:#ecd9c6;background:#fff}
+    .hamb{display:none;background:none;border:0;font-size:1.4rem;padding:8px}
+
+    /* ===== Hero (LCP) ===== */
+    header.hero{position:relative;isolation:isolate}
+    .hero-media{position:absolute;inset:0;z-index:-1;overflow:hidden}
+    .hero-media img{width:100%;height:100%;object-fit:cover;filter:grayscale(6%) contrast(104%)}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(38,22,15,.55),rgba(38,22,15,.2),rgba(252,248,243,.96) 70%)}
+    .hero-inner{padding:var(--space-8) 0 var(--space-9)}
+    .eyebrow{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid rgba(0,0,0,.06)}
+    h1{font-family:"Playfair Display",serif;font-size:clamp(2rem,6vw,3.4rem);line-height:1.1;margin:10px 0}
+    .hero-ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+
+    /* ===== Sections ===== */
+    section{padding:var(--space-10) 0}
+    :where(section)+:where(section){margin-top:var(--space-10)}
+    .section-title{font-family:"Playfair Display",serif;font-size:clamp(1.7rem,3.5vw,2.2rem);margin:0 0 12px}
+    .section-lead{color:var(--muted);max-width:70ch;margin:0 0 24px}
+
+    /* ===== Menu (Sales-first) ===== */
+    .menu-controls{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+    .menu-controls input[type="search"]{padding:12px 14px;border-radius:999px;border:1px solid #e7dacf;background:#fff}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}
+    .pill{border:1px solid #e7dacf;background:#fff;border-radius:999px;padding:8px 12px;font-weight:600;cursor:pointer}
+    .pill.active,.pill:hover{background:#efe3d7;border-color:#d9b696}
+    .menu-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .menu-card{background:var(--surface);border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+    .menu-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+    .price{font-weight:800;color:var(--brand)}
+    .qty{display:flex;align-items:center;gap:8px}
+    .qty button{width:28px;height:28px;border-radius:8px;border:1px solid #e7dacf;background:#fff}
+    .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+
+    /* ===== Cart / Sticky bar ===== */
+    .whatsapp{position:fixed;right:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:12px 16px;border-radius:999px;font-weight:700;box-shadow:var(--shadow)}
+    .cartbar{position:sticky;bottom:0;z-index:55;background:#fff;border-top:1px solid rgba(0,0,0,.06);box-shadow:0 -10px 30px rgba(0,0,0,.06);padding:10px 12px;display:flex;align-items:center;justify-content:space-between}
+    .cartbar .total{font-weight:800;color:var(--brand)}
+
+    /* ===== About v2 ===== */
+    .aboutv2-wrap{display:grid;grid-template-columns:1fr;gap:16px}
+    .aboutv2-media{position:relative}
+    .aboutv2-stats{position:absolute;left:12px;bottom:12px;display:flex;gap:10px;background:rgba(255,255,255,.75);backdrop-filter:blur(6px);border:1px solid rgba(0,0,0,.06);padding:10px;border-radius:14px}
+    .pillars{display:grid;grid-template-columns:1fr;gap:10px;margin:12px 0}
+    .pillar{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:12px}
+
+    /* ===== Gallery ===== */
+    .gallery{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
+    .lightbox img{max-height:90vh;border-radius:16px}
+
+    /* ===== Tables & Cards ===== */
+    .hours{width:100%;border-collapse:collapse;background:var(--surface);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+    .hours th,.hours td{padding:10px 12px;border-bottom:1px solid rgba(0,0,0,.06)}
+    .t-grid,.cards,.blog{display:grid;grid-template-columns:1fr;gap:12px}
+    .t-card,.card{background:var(--surface);border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+
+    /* ===== Footer ===== */
+    footer{background:linear-gradient(to bottom,#efe3d7,#f7efe7);padding:24px 0 80px;border-top:1px solid rgba(0,0,0,.06)}
+    .f-grid{display:grid;grid-template-columns:1fr;gap:16px}
+
+    /* ===== Responsive ===== */
+    @media (min-width:720px){
+      .menu-controls{flex-direction:row;align-items:center}
+      .menu-controls input[type="search"]{flex:1}
+      .menu-grid{grid-template-columns:repeat(2,1fr)}
+      .gallery{grid-template-columns:repeat(4,1fr)}
+      .t-grid,.cards,.blog{grid-template-columns:repeat(3,1fr)}
+      .aboutv2-wrap{grid-template-columns:1.1fr 1fr;align-items:center}
+      .f-grid{grid-template-columns:2fr 1fr 1fr}
+      .menu{gap:6px}
+    }
+
+    @media (max-width:900px){
+      .menu{position:fixed;inset:60px 10px auto 10px;flex-direction:column;background:#fff;border-radius:16px;padding:10px;border:1px solid rgba(0,0,0,.06);box-shadow:var(--shadow);display:none}
+      .menu.open{display:flex}
+      .hamb{display:inline-grid;place-items:center}
+      .cta{display:none}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .btn:hover{transform:none}
+    }
+      /* ===== Contact Form (UX) ===== */
+    .form-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .field{display:grid;gap:6px}
+    label{font-weight:600}
+    input,select,textarea{padding:12px;border-radius:12px;border:1px solid #e7dacf;background:#fff;outline:none}
+    input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(201,145,91,.15)}
+    .err{color:#a12a2a;min-height:16px}
+    .invalid{border-color:#a12a2a}
+    .consent{margin:12px 0}
+    .check{display:flex;align-items:center;gap:8px}
+    .actions-line{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .alert{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid transparent}
+    .alert.ok{background:#e8f5ee;border-color:#bfe3cf;color:#145a34}
+    .alert.err{background:#fdecec;border-color:#f3b4b4;color:#7a1d1d}
+
+    @media (min-width:720px){
+      .form-grid{grid-template-columns:repeat(4,1fr)}
+      .field:nth-child(1){grid-column:span 2}
+      .field:nth-child(2){grid-column:span 2}
+      .field:nth-child(3){grid-column:span 2}
+      .field:nth-child(4){grid-column:span 2}
+    }
+
+  </style>
+</head>
+<body>
+  <a href="#contenido" class="skip">Saltar al contenido</a>
+  <nav class="nav" aria-label="Navegación principal">
+    <div class="container nav-wrap">
+      <a href="#" class="brand" aria-label="Inicio ¡Órale Café!">
+        <span class="mark">¡Ó!</span><span>¡Órale Café!</span>
+      </a>
+      <button class="hamb" aria-label="Abrir menú" id="hamb">☰</button>
+      <div class="menu" id="menu">
+        <a href="#menu-sec">Menú</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#galeria">Galería</a>
+        <a href="#ubicacion">Ubicación</a>
+        <a href="#testimonios">Reseñas</a>
+        <a href="#eventos">Eventos</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="cta">
+        <a class="btn btn-ghost" href="#menu-sec">Ver menú</a>
+        <a class="btn btn-primary" href="https://wa.me/5215555555555?text=Hola%20%C2%A1%C3%93rale%20Caf%C3%A9!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener">Ordenar ahora</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-media" aria-hidden="true">
+      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1800&auto=format&fit=crop" alt="Capuchino con arte latte" fetchpriority="high">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="container hero-inner">
+      <span class="eyebrow">Cafetería artesanal • Hecho en CDMX</span>
+      <h1>El mejor café de CDMX</h1>
+      <p>Ordena en línea por WhatsApp o visítanos. Espresso de origen, filtrados y panadería fresca.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#menu-sec">Ver menú</a>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=%C2%A1%C3%93rale%20Caf%C3%A9%2C%20CDMX" target="_blank" rel="noopener">Cómo llegar</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <!-- MENÚ (primero por intención de tarea) -->
+    <section id="menu-sec" class="container" aria-labelledby="menu-title">
+      <h2 id="menu-title" class="section-title">Ordena ahora</h2>
+      <p class="section-lead">Explora el menú, ajusta cantidades y envía tu pedido por WhatsApp.</p>
+      <div class="menu-controls" role="toolbar" aria-label="Filtros del menú">
+        <input id="menuSearch" type="search" placeholder="Buscar (ej. capuchino, vegano, frío)" aria-label="Buscar en el menú" />
+        <div class="pills" id="menuPills">
+          <button class="pill active" data-filter="all">Todo</button>
+          <button class="pill" data-filter="cafe">Cafés</button>
+          <button class="pill" data-filter="te">Tés</button>
+          <button class="pill" data-filter="frio">Fríos</button>
+          <button class="pill" data-filter="pan">Pan</button>
+          <button class="pill" data-filter="sandwich">Sándwiches</button>
+          <button class="pill" data-filter="vegano">Vegano</button>
+          <button class="pill" data-filter="sin-gluten">Sin gluten</button>
+        </div>
+      </div>
+
+      <div class="menu-grid" id="menuGrid" aria-live="polite">
+        <!-- ejemplo de tarjeta con qty -->
+        <article class="menu-card" data-cat="cafe">
+          <div class="menu-head"><strong>Espresso</strong><span class="price" data-price="45">$45</span></div>
+          <p>Simple, intenso y balanceado.</p>
+          <div class="actions">
+            <div class="qty" aria-label="Cantidad">
+              <button class="qminus" aria-label="Quitar uno" data-item="Espresso">−</button>
+              <span class="qval" data-item="Espresso">1</span>
+              <button class="qplus" aria-label="Agregar uno" data-item="Espresso">＋</button>
+            </div>
+            <button class="btn btn-primary add" data-item="Espresso" data-price="45">Agregar</button>
+          </div>
+        </article>
+
+        <article class="menu-card" data-cat="cafe">
+          <div class="menu-head"><strong>Americano</strong><span class="price" data-price="50">$50</span></div>
+          <p>Espresso + agua filtrada.</p>
+          <div class="actions">
+            <div class="qty"><button class="qminus" data-item="Americano">−</button><span class="qval" data-item="Americano">1</span><button class="qplus" data-item="Americano">＋</button></div>
+            <button class="btn btn-primary add" data-item="Americano" data-price="50">Agregar</button>
+          </div>
+        </article>
+
+        <article class="menu-card" data-cat="cafe">
+          <div class="menu-head"><strong>Cappuccino</strong><span class="price" data-price="65">$65</span></div>
+          <p>Leche microespumada y arte latte.</p>
+          <div class="actions">
+            <div class="qty"><button class="qminus" data-item="Cappuccino">−</button><span class="qval" data-item="Cappuccino">1</span><button class="qplus" data-item="Cappuccino">＋</button></div>
+            <button class="btn btn-primary add" data-item="Cappuccino" data-price="65">Agregar</button>
+          </div>
+        </article>
+
+        <article class="menu-card" data-cat="te vegano">
+          <div class="menu-head"><strong>Té Chai</strong><span class="price" data-price="60">$60</span></div>
+          <p>Especiado y cremoso, vegano.</p>
+          <div class="actions">
+            <div class="qty"><button class="qminus" data-item="Té Chai">−</button><span class="qval" data-item="Té Chai">1</span><button class="qplus" data-item="Té Chai">＋</button></div>
+            <button class="btn btn-primary add" data-item="Té Chai" data-price="60">Agregar</button>
+          </div>
+        </article>
+
+        <article class="menu-card" data-cat="frio">
+          <div class="menu-head"><strong>Cold Brew</strong><span class="price" data-price="68">$68</span></div>
+          <p>12h de extracción en frío.</p>
+          <div class="actions">
+            <div class="qty"><button class="qminus" data-item="Cold Brew">−</button><span class="qval" data-item="Cold Brew">1</span><button class="qplus" data-item="Cold Brew">＋</button></div>
+            <button class="btn btn-primary add" data-item="Cold Brew" data-price="68">Agregar</button>
+          </div>
+        </article>
+
+        <article class="menu-card" data-cat="pan sin-gluten">
+          <div class="menu-head"><strong>Pan de Plátano</strong><span class="price" data-price="48">$48</span></div>
+          <p>Horneado diario. Sin gluten.</p>
+          <div class="actions">
+            <div class="qty"><button class="qminus" data-item="Pan de Plátano">−</button><span class="qval" data-item="Pan de Plátano">1</span><button class="qplus" data-item="Pan de Plátano">＋</button></div>
+            <button class="btn btn-primary add" data-item="Pan de Plátano" data-price="48">Agregar</button>
+          </div>
+        </article>
+
+        <article class="menu-card" data-cat="sandwich">
+          <div class="menu-head"><strong>Sándwich Pavo & Queso</strong><span class="price" data-price="85">$85</span></div>
+          <p>Pan de masa madre y mostaza antigua.</p>
+          <div class="actions">
+            <div class="qty"><button class="qminus" data-item="Sándwich Pavo & Queso">−</button><span class="qval" data-item="Sándwich Pavo & Queso">1</span><button class="qplus" data-item="Sándwich Pavo & Queso">＋</button></div>
+            <button class="btn btn-primary add" data-item="Sándwich Pavo & Queso" data-price="85">Agregar</button>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="cartbar" role="status" aria-live="polite">
+        <span><strong id="cartCount">0</strong> ítem(s) • <span class="total" id="cartTotal">$0</span></span>
+        <div style="display:flex;gap:8px">
+          <a class="btn btn-ghost" href="#menu-sec">Ver menú</a>
+          <a class="btn btn-primary" id="checkoutBtn" target="_blank" rel="noopener">Ir a WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE NOSOTROS (v2) -->
+    <section id="sobre" class="container aboutv2">
+      <div class="aboutv2-wrap">
+        <div class="aboutv2-media">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop" alt="Interior de la cafetería">
+          <div class="aboutv2-stats" aria-label="Nuestros números">
+            <div><strong>+6</strong><span>Años</span></div>
+            <div><strong>4.8★</strong><span>Google</span></div>
+            <div><strong>100%</strong><span>Origen</span></div>
+          </div>
+        </div>
+        <div>
+          <span class="eyebrow">Quiénes somos</span>
+          <h2 class="section-title">Café serio, hospitalidad a la mexicana</h2>
+          <p class="section-lead">Pequeños productores, tueste propio y un espacio bonito para disfrutar.</p>
+          <div class="pillars">
+            <article class="pillar"><div>🌱</div><div><strong>Origen responsable</strong><p>Relación directa y trazabilidad.</p></div></article>
+            <article class="pillar"><div>🔥</div><div><strong>Tueste preciso</strong><p>Perfiles por origen y consistencia.</p></div></article>
+            <article class="pillar"><div>🤎</div><div><strong>Hospitalidad</strong><p>Servicio cálido y rápido.</p></div></article>
+          </div>
+          <div class="aboutv2-ctas"><a class="btn btn-primary" href="#menu-sec">Ver menú</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERÍA -->
+    <section id="galeria" class="container">
+      <h2 class="section-title">Galería</h2>
+      <p class="section-lead">Bebidas, espacio y comunidad.</p>
+      <div class="gallery">
+        <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?q=80&w=900&auto=format&fit=crop" alt="Granos de café" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=900&auto=format&fit=crop" alt="Vertido manual" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=900&auto=format&fit=crop" alt="Barista sirviendo" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=900&auto=format&fit=crop" alt="Arte latte" loading="lazy">
+      </div>
+      <div class="lightbox" id="lightbox" aria-modal="true" role="dialog"><img id="lightboxImg" alt="Vista ampliada"></div>
+    </section>
+
+    <!-- UBICACIÓN & HORARIOS -->
+    <section id="ubicacion" class="container">
+      <h2 class="section-title">Ubicación & Horarios</h2>
+      <p class="section-lead">Estacionamiento cercano y acceso a metro.</p>
+      <iframe title="Mapa ¡Órale Café!" src="https://www.google.com/maps?q=%C2%A1%C3%93rale%20Caf%C3%A9%20CDMX&output=embed" style="width:100%;height:320px;border:0;border-radius:16px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <table class="hours" aria-label="Horarios de atención" style="margin-top:12px">
+        <thead><tr><th>Día</th><th>Horario</th></tr></thead>
+        <tbody>
+          <tr><td>Lunes - Viernes</td><td>7:30 - 20:00</td></tr>
+          <tr><td>Sábado</td><td>8:00 - 21:00</td></tr>
+          <tr><td>Domingo</td><td>9:00 - 18:00</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section id="testimonios" class="container">
+      <h2 class="section-title">Reseñas</h2>
+      <div class="t-grid">
+        <article class="t-card"><strong>María G.</strong><p>★★★★★</p><p>El cappuccino más consistente de la zona.</p></article>
+        <article class="t-card"><strong>Ian R.</strong><p>★★★★★</p><p>Filtrados a otro nivel. Pregunta por el origen del mes.</p></article>
+        <article class="t-card"><strong>Sofía L.</strong><p>★★★★☆</p><p>Ambiente ideal para trabajar. Pan sin gluten.</p></article>
+      </div>
+    </section>
+
+    <!-- EVENTOS -->
+    <section id="eventos" class="container">
+      <h2 class="section-title">Eventos & Promos</h2>
+      <div class="cards">
+        <article class="card"><strong>Noche de música</strong><p>Jueves 19:00 • 2×1 cappuccino.</p></article>
+        <article class="card"><strong>Taller de métodos</strong><p>Sábado 10:00 • V60 & Aeropress.</p></article>
+        <article class="card"><strong>Happy Hour</strong><p>Lun–Vie 16:00–18:00 • 15% estudiantes.</p></article>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="container">
+      <h2 class="section-title">Contacto</h2>
+      <p class="section-lead">¿Tienes un pedido especial, evento o comentario? Escríbenos. Respondemos en horario laboral.</p>
+
+      <form id="contactForm" action="https://formspree.io/f/xxxxxxx" method="POST" novalidate>
+        <!-- Honeypot anti-spam -->
+        <input type="text" name="_hp" id="hp_field" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px" />
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+            <small class="err" id="err-nombre"></small>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="tu@correo.com" inputmode="email" required>
+            <small class="err" id="err-email"></small>
+          </div>
+          <div class="field">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="55 1234 5678" inputmode="tel" pattern="^[0-9\s+()-]{8,}$">
+            <small class="err" id="err-telefono"></small>
+          </div>
+          <div class="field">
+            <label for="asunto">Asunto</label>
+            <select id="asunto" name="asunto" required>
+              <option value="" selected disabled>Selecciona una opción</option>
+              <option>Pedido</option>
+              <option>Evento</option>
+              <option>Comentario</option>
+              <option>Otro</option>
+            </select>
+            <small class="err" id="err-asunto"></small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="mensaje">Mensaje</label>
+          <textarea rows="6" id="mensaje" name="mensaje" placeholder="Cuéntanos los detalles" required></textarea>
+          <small class="err" id="err-mensaje"></small>
+        </div>
+
+        <div class="consent">
+          <label class="check">
+            <input type="checkbox" id="consent" required>
+            <span>Acepto la <a href="#legal">política de privacidad</a>.</span>
+          </label>
+          <small class="err" id="err-consent"></small>
+        </div>
+
+        <div class="actions-line">
+          <button class="btn btn-primary" type="submit" id="sendBtn">Enviar</button>
+          <a class="btn btn-ghost" href="https://wa.me/5215555555555?text=Hola%20%C2%A1%C3%93rale%20Caf%C3%A9!%20Quiero%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+
+        <div class="alert" id="formAlert" role="status" aria-live="polite" hidden></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container f-grid">
+      <div>
+        <div class="brand" style="margin-bottom:6px"><span class="mark">¡Ó!</span><span>¡Órale Café!</span></div>
+        <p>Newsletter</p>
+        <form onsubmit="event.preventDefault(); alert('Gracias por suscribirte ☕');">
+          <div style="display:grid;grid-template-columns:1fr auto;gap:8px"><input type="email" placeholder="Tu email" required><button class="btn btn-primary" type="submit">Suscribirme</button></div>
+        </form>
+      </div>
+      <div>
+        <p><strong>Síguenos</strong></p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><a href="#">📷 Instagram</a><a href="#">📘 Facebook</a><a href="#">🎵 TikTok</a></div>
+      </div>
+      <div>
+        <p><strong>Pagos</strong></p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><span>💳 Visa</span><span>💳 MasterCard</span><span>📱 CoDi</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <a class="whatsapp" href="https://wa.me/5215555555555?text=Hola%20%C2%A1%C3%93rale%20Caf%C3%A9!%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" aria-label="WhatsApp ¡Órale Café!">💬 WhatsApp</a>
+
+  <script>
+    // Año en URL/SEO podría añadirse si se requiere
+
+    // ===== Contact Form logic =====
+    const cForm = document.getElementById('contactForm');
+    const sendBtn = document.getElementById('sendBtn');
+    const formAlert = document.getElementById('formAlert');
+
+    function setAlert(type,msg){
+      formAlert.hidden = false;
+      formAlert.className = 'alert ' + (type==='ok'?'ok':'err');
+      formAlert.textContent = msg;
+    }
+
+    function clearErrors(){ document.querySelectorAll('#contactForm .err').forEach(e=>e.textContent=''); document.querySelectorAll('#contactForm .invalid').forEach(e=>e.classList.remove('invalid')); }
+
+    function validate(){
+      clearErrors();
+      let ok = true; let firstInvalid = null;
+      const required = [
+        ['nombre','Por favor escribe tu nombre'],
+        ['email','Ingresa un email válido'],
+        ['asunto','Selecciona un asunto'],
+        ['mensaje','Escribe tu mensaje']
+      ];
+      required.forEach(([id,msg])=>{
+        const el = document.getElementById(id);
+        if(!el.checkValidity()){
+          document.getElementById('err-'+id)?.textContent = msg;
+          el.classList.add('invalid'); ok=false; if(!firstInvalid) firstInvalid=el;
+        }
+      });
+      const tel = document.getElementById('telefono');
+      if(tel.value && !tel.checkValidity()){ document.getElementById('err-telefono').textContent = 'Teléfono inválido'; tel.classList.add('invalid'); ok=false; if(!firstInvalid) firstInvalid=tel; }
+      const consent = document.getElementById('consent');
+      if(!consent.checked){ document.getElementById('err-consent').textContent = 'Debes aceptar la política de privacidad'; ok=false; if(!firstInvalid) firstInvalid=consent; }
+      if(firstInvalid) firstInvalid.focus();
+      return ok;
+    }
+
+    cForm?.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      formAlert.hidden = true;
+      if(document.getElementById('hp_field').value){ return; } // bot
+      if(!validate()) return;
+      try{
+        sendBtn.disabled = true; sendBtn.textContent = 'Enviando…';
+        const data = new FormData(cForm);
+        if(cForm.action.includes('/f/')){
+          const r = await fetch(cForm.action,{ method:'POST', body:data, headers:{'Accept':'application/json'} });
+          if(!r.ok) throw new Error('Error al enviar');
+          setAlert('ok','¡Gracias! Tu mensaje fue enviado.');
+          cForm.reset();
+        } else {
+          // fallback sin backend
+          setAlert('ok','Gracias por tu mensaje. Te contactaremos pronto.');
+          cForm.reset();
+        }
+      } catch(err){
+        setAlert('err','No pudimos enviar tu mensaje. Inténtalo de nuevo o usa WhatsApp.');
+      } finally {
+        sendBtn.disabled = false; sendBtn.textContent = 'Enviar';
+      }
+    });
+
+    // Filtros y búsqueda
+    const menuGrid = document.getElementById('menuGrid');
+    const menuSearch = document.getElementById('menuSearch');
+    const pills = document.getElementById('menuPills');
+    const cards = ()=> Array.from(menuGrid.querySelectorAll('.menu-card'));
+    function applyFilters(){
+      const q = (menuSearch?.value || '').toLowerCase();
+      const active = pills?.querySelector('.pill.active')?.dataset.filter || 'all';
+      cards().forEach(card=>{
+        const text = card.textContent.toLowerCase();
+        const cat = card.dataset.cat || '';
+        const hit = text.includes(q) && (active==='all' || cat.split(' ').includes(active));
+        card.style.display = hit ? '' : 'none';
+      });
+    }
+    menuSearch?.addEventListener('input', applyFilters);
+    pills?.addEventListener('click', (e)=>{
+      if(e.target.classList.contains('pill')){
+        pills.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+        e.target.classList.add('active');
+        applyFilters();
+      }
+    });
+
+    // Cantidades
+    const qtyMap = new Map();
+    function setQty(name, val){ qtyMap.set(name, Math.max(1, val)); document.querySelectorAll(`.qval[data-item="${name}"]`).forEach(s=>s.textContent=qtyMap.get(name)); }
+    document.addEventListener('click',(e)=>{
+      const plus = e.target.closest('.qplus');
+      const minus = e.target.closest('.qminus');
+      if(plus){ const n = plus.dataset.item; setQty(n,(qtyMap.get(n)||1)+1); }
+      if(minus){ const n = minus.dataset.item; setQty(n,(qtyMap.get(n)||1)-1); }
+    });
+
+    // Carrito + checkout WhatsApp + persistencia
+    const cart = JSON.parse(localStorage.getItem('cart_orale')||'[]');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    function renderCart(){
+      const count = cart.reduce((a,i)=>a+i.qty,0);
+      const total = cart.reduce((a,i)=>a+i.price*i.qty,0);
+      cartCount.textContent = count; cartTotal.textContent = `$${total}`;
+      const lines = cart.map(i=>`• ${i.name} x${i.qty} — $${i.price*i.qty}`).join('%0A');
+      const msg = `Hola ¡Órale Café! Quiero pedir:%0A${lines}%0ATotal: $${total}`;
+      checkoutBtn.href = `https://wa.me/5215555555555?text=${msg}`;
+      localStorage.setItem('cart_orale', JSON.stringify(cart));
+    }
+    document.addEventListener('click',(e)=>{
+      const btn = e.target.closest('.add');
+      if(!btn) return;
+      const name = btn.dataset.item; const price = parseInt(btn.dataset.price,10)||0; const qty = qtyMap.get(name)||1;
+      const found = cart.find(i=>i.name===name);
+      if(found) found.qty += qty; else cart.push({name,price,qty});
+      renderCart();
+    });
+    renderCart();
+
+    // Lightbox
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg');
+    document.querySelectorAll('#galeria img').forEach(img=>{ img.addEventListener('click',()=>{ lbImg.src = img.src; lb.style.display='flex'; }) });
+    lb?.addEventListener('click', ()=> lb.style.display='none');
+  </script>
+</body>
+</html>
