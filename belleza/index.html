@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Salón Belleza Glamour</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fffafc;
+      --accent:#f78fb3;
+      --accent-2:#f8a5c2;
+      --text:#333;
+      --muted:#666;
+      --shadow:rgba(0,0,0,0.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:Poppins,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+    header{position:sticky;top:0;background:#fff;box-shadow:0 2px 6px var(--shadow);z-index:10;}
+    .container{max-width:1200px;margin:auto;padding:20px;}
+    nav{display:flex;align-items:center;justify-content:space-between;}
+    nav ul{display:flex;list-style:none;gap:20px;}
+    nav a{text-decoration:none;color:var(--text);font-weight:600;transition:.3s;}
+    nav a:hover{color:var(--accent);}
+    .logo{font-size:1.4rem;font-weight:700;color:var(--accent);}
+    .cta{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:10px 20px;border-radius:25px;text-decoration:none;font-weight:600;transition:.3s;}
+    .cta:hover{opacity:.8;}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;padding:60px 20px;}
+    .hero img{width:100%;border-radius:15px;box-shadow:0 10px 30px var(--shadow);}
+    .hero h1{font-size:2.5rem;color:var(--accent);}
+    .hero p{color:var(--muted);margin:15px 0;}
+
+    /* Sections */
+    section{padding:60px 20px;}
+    h2{text-align:center;color:var(--accent);margin-bottom:20px;}
+    .about,.pricing,.clients,.contact,.reviews{max-width:1100px;margin:auto;}
+    .about p{text-align:center;color:var(--muted);}
+
+    /* Pricing */
+    .price-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:30px;}
+    .card{background:#fff;border-radius:15px;padding:25px;box-shadow:0 4px 15px var(--shadow);transition:transform .3s;}
+    .card:hover{transform:translateY(-5px);}
+    .price{font-size:1.5rem;font-weight:700;color:var(--accent);}
+    .card ul{margin-top:10px;list-style:disc;padding-left:20px;color:var(--muted);}
+
+    /* Clients */
+    .clients-logos{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:20px;}
+    .client-logo{width:120px;height:60px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:10px;box-shadow:0 4px 10px var(--shadow);font-weight:600;color:var(--accent);}
+
+    /* Reviews */
+    .reviews-container{display:flex;overflow:hidden;gap:20px;}
+    .review{min-width:100%;background:#fff;border-radius:15px;box-shadow:0 4px 10px var(--shadow);padding:25px;transition:transform .5s ease;}
+
+    /* Contact */
+    form{display:grid;gap:15px;}
+    input,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;font-family:Poppins;}
+    button{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;padding:12px;border-radius:25px;color:#fff;font-weight:600;cursor:pointer;transition:.3s;}
+    button:hover{opacity:.8;}
+
+    /* Animations */
+    .reveal{opacity:0;transform:translateY(20px);transition:all .6s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    /* Responsive */
+    @media(max-width:800px){
+      .hero{grid-template-columns:1fr;text-align:center;}
+      .hero img{order:-1;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <nav>
+        <div class="logo">Salón Glamour</div>
+        <ul>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#clientes">Clientes</a></li>
+          <li><a href="#precios">Precios</a></li>
+          <li><a href="#contacto">Contáctanos</a></li>
+        </ul>
+        <a href="#contacto" class="cta">Agenda tu cita</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1 class="reveal">Resalta tu belleza con estilo y confianza</h1>
+      <p class="reveal">En Salón Glamour ofrecemos servicios de peluquería, maquillaje y spa con los mejores profesionales. Vive una experiencia única de cuidado y relajación.</p>
+      <a href="#contacto" class="cta reveal">Agenda tu cita ahora</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Salón de belleza">
+  </section>
+
+  <section id="nosotros" class="about">
+    <h2>Nosotros</h2>
+    <p class="reveal">Somos un equipo apasionado por realzar la belleza natural de cada persona. Con más de 10 años de experiencia, nos especializamos en crear estilos modernos y personalizados, adaptados a tu esencia.</p>
+  </section>
+
+  <section id="clientes" class="clients">
+    <h2>Nuestros Clientes</h2>
+    <div class="clients-logos reveal">
+      <div class="client-logo">L'Oréal</div>
+      <div class="client-logo">Wella</div>
+      <div class="client-logo">Revlon</div>
+      <div class="client-logo">Natura</div>
+    </div>
+  </section>
+
+  <section id="precios" class="pricing">
+    <h2>Lista de precios</h2>
+    <div class="price-list reveal">
+      <div class="card">
+        <h3>Corte y Peinado</h3>
+        <p class="price">$350 MXN</p>
+        <ul>
+          <li>Asesoría de imagen</li>
+          <li>Lavado y tratamiento</li>
+          <li>Peinado final</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Coloración Profesional</h3>
+        <p class="price">$850 MXN</p>
+        <ul>
+          <li>Tinte o mechas</li>
+          <li>Tratamiento hidratante</li>
+          <li>Secado y peinado</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Manicure & Spa</h3>
+        <p class="price">$500 MXN</p>
+        <ul>
+          <li>Manicure y exfoliación</li>
+          <li>Masaje relajante</li>
+          <li>Esmaltado profesional</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews">
+    <h2>Reseñas de clientes</h2>
+    <div class="reviews-container reveal" id="slides">
+      <div class="review"><strong>Laura M.</strong><p>“Increíble atención, mi cabello quedó hermoso. Sin duda volveré.”</p></div>
+      <div class="review"><strong>Sofía R.</strong><p>“El ambiente es relajante y los profesionales muy amables. 100% recomendado.”</p></div>
+      <div class="review"><strong>Andrea P.</strong><p>“Excelente servicio de maquillaje, justo lo que quería para mi evento.”</p></div>
+    </div>
+    <div style="text-align:center;margin-top:15px;">
+      <button id="prev" class="cta" style="padding:6px 12px;">‹</button>
+      <button id="next" class="cta" style="padding:6px 12px;">›</button>
+    </div>
+  </section>
+
+  <section id="contacto" class="contact">
+    <h2>Contáctanos</h2>
+    <div class="card reveal">
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Nombre" required>
+        <input type="email" id="email" placeholder="Correo" required>
+        <textarea id="message" rows="4" placeholder="Tu mensaje" required></textarea>
+        <button type="submit">Enviar mensaje</button>
+      </form>
+    </div>
+  </section>
+
+  <footer style="text-align:center;padding:30px 0;color:var(--muted);font-size:14px;">© 2025 Salón Glamour - Todos los derechos reservados</footer>
+
+  <script>
+    // Reveal on scroll
+    const reveals=document.querySelectorAll('.reveal');
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+    },{threshold:.1});
+    reveals.forEach(r=>io.observe(r));
+
+    // Reviews slider
+    const slides=document.getElementById('slides');
+    let index=0;const total=slides.children.length;
+    function show(i){index=(i+total)%total;slides.style.transform='translateX(' + (-index*100) + '%)';}
+    document.getElementById('prev').onclick=()=>show(index-1);
+    document.getElementById('next').onclick=()=>show(index+1);
+    setInterval(()=>show(index+1),6000);
+
+    // Contact form
+    const form=document.getElementById('contactForm');
+    form.addEventListener('submit',e=>{
+      e.preventDefault();
+      alert('¡Gracias por contactarnos! Te responderemos pronto.');
+      form.reset();
+    });
+  </script>
+</body>
+</html>
