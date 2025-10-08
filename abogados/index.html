@@ -1,99 +1,401 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Martínez & Asociados | Despacho Legal</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Despacho Jurídico - Soluciones Legales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220cc;
+      --glass: rgba(255,255,255,0.04);
+      --accent:#6c5ce7;
+      --accent-2:#00d4ff;
+      --muted:#9aa4b2;
+      --glass-border: rgba(255,255,255,0.06);
+      --max-width:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:linear-gradient(180deg,#07121a 0%, #071827 45%), radial-gradient(600px 400px at 10% 10%, rgba(108,92,231,0.12), transparent), radial-gradient(500px 300px at 90% 80%, rgba(0,212,255,0.06), transparent); color:#e6eef5; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.4;
+    }
+    .container{max-width:var(--max-width); margin:0 auto; padding:32px}
+
+    /* NAV */
+    header{position:sticky; top:0; z-index:60; backdrop-filter: blur(6px); background:linear-gradient(180deg, rgba(10,14,20,0.6), rgba(8,12,18,0.35)); border-bottom:1px solid rgba(255,255,255,0.03)}
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:46px; height:46px; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:flex; align-items:center; justify-content:center; font-weight:700; font-family:Merriweather}
+    nav ul{list-style:none; display:flex; gap:18px; margin:0; padding:0; align-items:center}
+    nav a{color:var(--muted); text-decoration:none; font-weight:600}
+    .cta{background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#07121a; padding:10px 16px; border-radius:10px; text-decoration:none; font-weight:700}
+    .menu-toggle{display:none; background:transparent; border:1px solid rgba(255,255,255,0.04); padding:8px; border-radius:8px}
+
+    /* HERO */
+    .hero{display:grid; grid-template-columns:1fr 420px; gap:28px; align-items:center; padding:64px 0}
+    .hero-left{padding-right:10px}
+    h1{font-family:Merriweather; font-size:40px; margin:0 0 12px; line-height:1.05}
+    .lead{color:var(--muted); margin:0 0 20px}
+    .hero-cta{display:flex; gap:12px}
+    .pill{background:var(--glass); border:1px solid var(--glass-border); padding:8px 12px; border-radius:999px; color:var(--muted); display:inline-flex; gap:8px; align-items:center}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid var(--glass-border); border-radius:14px; padding:20px}
+
+    /* Clients */
+    .clients{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+    .client-logo{width:120px; height:48px; background:linear-gradient(90deg, rgba(255,255,255,0.03), transparent); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--muted); font-weight:700}
+
+    /* Pricing */
+    .pricing{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .price-card{padding:22px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03)}
+    .price{font-size:28px; font-weight:800; margin:12px 0}
+    .features{color:var(--muted); font-size:14px}
+
+    /* Contact */
+    form{display:grid; gap:12px}
+    label{font-size:13px; color:var(--muted)}
+    input, textarea, select{background:transparent; border:1px solid rgba(255,255,255,0.06); padding:12px; border-radius:8px; color:inherit; outline:none}
+    input:focus, textarea:focus, select:focus{box-shadow:0 6px 20px rgba(108,92,231,0.08); border-color:var(--accent)}
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+
+    /* Testimonials */
+    .testimonials{position:relative}
+    .slides{display:flex; gap:12px; overflow:hidden}
+    .slide{min-width:100%; transition:transform .45s cubic-bezier(.2,.9,.3,1); padding:20px; border-radius:12px}
+
+    /* Footer */
+    footer{padding:40px 0; color:var(--muted); border-top:1px solid rgba(255,255,255,0.03)}
+
+    /* Utilities */
+    .small{font-size:13px}
+    .muted{color:var(--muted)}
+    .center{display:flex; align-items:center; justify-content:center}
+
+    /* Animations & reveal */
+    .reveal{opacity:0; transform:translateY(20px); transition:all .7s cubic-bezier(.2,.9,.3,1)}
+    .reveal.visible{opacity:1; transform:none}
+
+    /* Responsive */
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr; padding:36px 0}
+      .hero-right{order:-1}
+      .pricing{grid-template-columns:repeat(2,1fr)}
+
+    }
+    @media(max-width:640px){
+      nav ul{display:none}
+      .menu-toggle{display:inline-flex}
+      .clients{justify-content:center}
+      .pricing{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
+    }
+
+    /* Small decorative */
+    .floating-img{border-radius:12px; overflow:hidden; box-shadow:0 10px 30px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.04)}
+    .accent-line{height:4px; width:64px; border-radius:999px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); margin-bottom:18px}
+
+    /* Testimonials card style */
+    .testimonial-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); padding:18px; border-radius:12px}
+
+  </style>
 </head>
 <body>
-  <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="container nav-container">
-      <h1 class="logo">Martínez<span>&Asociados</span></h1>
-      <nav class="nav-links" id="navLinks">
-        <a href="#inicio">Inicio</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#equipo">Equipo</a>
-        <a href="#contacto">Contacto</a>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo">DJ</div>
+        <div>
+          <div style="font-weight:700">Despacho Jurídico</div>
+          <div class="small muted">Soluciones legales modernas</div>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#clientes">Clientes</a></li>
+          <li><a href="#precios">Precios</a></li>
+          <li><a href="#contacto">Contáctanos</a></li>
+        </ul>
       </nav>
-      <div class="menu-toggle" id="menuToggle">☰</div>
+      <div style="display:flex; gap:12px; align-items:center">
+        <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+        <a href="#contacto" class="cta">Reserva consultoría</a>
+      </div>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section id="inicio" class="hero">
-    <div class="overlay"></div>
-    <div class="hero-content">
-      <h2>Protegemos lo que más valoras</h2>
-      <p>Abogados con experiencia, ética y compromiso, defendiendo tus derechos con excelencia.</p>
-      <a href="#contacto" class="btn-primary">Agenda una consulta</a>
-    </div>
-  </section>
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="accent-line"></div>
+        <h1 class="reveal">Representamos tus intereses con claridad y estrategia.</h1>
+        <p class="lead reveal" style="transition-delay:.05s">Equipo de abogados especializados en derecho civil, corporativo y familiar. Asesoría práctica, confidencial y orientada a resultados.</p>
+        <div class="hero-cta reveal" style="transition-delay:.1s">
+          <a class="cta" href="#contacto">Solicitar consulta</a>
+          <div class="pill">✅ Primera valoración gratis</div>
+        </div>
 
-  <!-- SERVICIOS -->
-  <section id="servicios" class="services">
-    <h2>Nuestros Servicios</h2>
-    <p class="section-subtitle">Soluciones legales a tu medida</p>
-    <div class="service-grid">
-      <div class="service-card">
-        <i class="icon">⚖️</i>
-        <h3>Derecho Civil</h3>
-        <p>Asesoría en contratos, herencias y propiedad. Resolvemos conflictos con integridad y justicia.</p>
-      </div>
-      <div class="service-card">
-        <i class="icon">🕊️</i>
-        <h3>Derecho Penal</h3>
-        <p>Defensa sólida con enfoque humano. Protegemos tus derechos en todo momento.</p>
-      </div>
-      <div class="service-card">
-        <i class="icon">💼</i>
-        <h3>Derecho Laboral</h3>
-        <p>Representación en conflictos laborales, despidos y negociaciones sindicales.</p>
-      </div>
-    </div>
-  </section>
+        <div style="margin-top:26px" class="card reveal" style="transition-delay:.15s">
+          <strong>Horario:</strong> Lun - Vie, 9:00 - 18:00 &nbsp; • &nbsp; <span class="muted">Atención presencial y online</span>
+        </div>
 
-  <!-- EQUIPO -->
-  <section id="equipo" class="team">
-    <h2>Conoce a Nuestro Equipo</h2>
-    <p class="section-subtitle">Profesionales comprometidos con tu tranquilidad</p>
-    <div class="team-grid">
-      <div class="team-member">
-        <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=400" alt="Abogado 1" />
-        <h3>Lic. Carlos Martínez</h3>
-        <p>Socio Fundador • Especialista en Derecho Penal</p>
-      </div>
-      <div class="team-member">
-        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400" alt="Abogada 2" />
-        <h3>Lic. Ana López</h3>
-        <p>Derecho Civil y Familiar</p>
-      </div>
-      <div class="team-member">
-        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400" alt="Abogado 3" />
-        <h3>Lic. Jorge Ramírez</h3>
-        <p>Derecho Laboral y Corporativo</p>
-      </div>
-    </div>
-  </section>
+        <section id="nosotros" style="margin-top:28px">
+          <div class="card reveal" style="margin-top:16px">
+            <h3>Nosotros</h3>
+            <p class="muted small">Somos un despacho con más de 15 años de experiencia. Combinamos conocimiento jurídico sólido con un enfoque moderno: comunicación clara, procesos digitales y tarifas transparentes.</p>
+            <ul style="margin:12px 0 0 18px" class="muted small">
+              <li>Atención personalizada</li>
+              <li>Estrategias orientadas a resultados</li>
+              <li>Informes periódicos y comunicación directa</li>
+            </ul>
+          </div>
+        </section>
 
-  <!-- CONTACTO -->
-  <section id="contacto" class="contact">
-    <h2>Contáctanos</h2>
-    <p class="section-subtitle">Permítenos asesorarte y proteger tus intereses</p>
-    <form class="contact-form">
-      <input type="text" placeholder="Nombre completo" required />
-      <input type="email" placeholder="Correo electrónico" required />
-      <textarea placeholder="Escribe tu mensaje..." required></textarea>
-      <button type="submit" class="btn-primary">Enviar Mensaje</button>
-    </form>
-  </section>
+      </div>
 
-  <!-- FOOTER -->
+      <aside class="hero-right reveal floating-img" style="padding:18px; transition-delay:.18s">
+        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='540'><rect width='100%25' height='100%25' fill='%230a1622'/><text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23cbdcf0' font-family='Merriweather' font-size='26'>Imagen profesional</text></svg>" alt="Equipo legal" style="width:100%; display:block">
+      </aside>
+    </section>
+
+    <!-- CLIENTS -->
+    <section id="clientes" style="margin-top:22px">
+      <h3>Clientes</h3>
+      <p class="muted small">Hemos trabajado con empresas y particulares de diversos sectores.</p>
+      <div class="card" style="margin-top:12px">
+        <div class="clients reveal">
+          <div class="client-logo">ACME</div>
+          <div class="client-logo">CONSORCIO</div>
+          <div class="client-logo">FAMILIA</div>
+          <div class="client-logo">STARTUP</div>
+          <div class="client-logo">INMOB</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="precios" style="margin-top:32px">
+      <h3>Lista de precios</h3>
+      <p class="muted small">Tarifas orientativas. Para presupuesto a medida, solicita una consulta.</p>
+      <div class="pricing reveal" style="margin-top:12px">
+        <div class="price-card">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <div>
+              <div class="small muted">Básico</div>
+              <div class="price">$1,200</div>
+            </div>
+            <div class="small muted">/ caso</div>
+          </div>
+          <p class="features">Consulta inicial, revisión de documentos, asesoría telefónica básica.</p>
+          <ul class="muted small" style="margin-top:12px">
+            <li>Respuesta en 3 días hábiles</li>
+            <li>Revisión de contrato (1 documento)</li>
+          </ul>
+        </div>
+
+        <div class="price-card">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <div>
+              <div class="small muted">Profesional</div>
+              <div class="price">$3,500</div>
+            </div>
+            <div class="small muted">/ caso</div>
+          </div>
+          <p class="features">Asesoría completa, elaboración de documentos, estrategia y seguimiento.</p>
+          <ul class="muted small" style="margin-top:12px">
+            <li>Respuesta en 48 horas</li>
+            <li>Incluye hasta 3 documentos</li>
+          </ul>
+        </div>
+
+        <div class="price-card">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <div>
+              <div class="small muted">Premium</div>
+              <div class="price">$8,900</div>
+            </div>
+            <div class="small muted">/ mes</div>
+          </div>
+          <p class="features">Retainer mensual para empresas: atención prioritaria y representación.</p>
+          <ul class="muted small" style="margin-top:12px">
+            <li>Informe mensual</li>
+            <li>Representación en negociaciones</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contacto" style="margin-top:32px">
+      <h3>Contáctanos</h3>
+      <div style="display:grid; grid-template-columns:1fr 420px; gap:18px; margin-top:12px">
+        <div class="card reveal">
+          <form id="contactForm">
+            <div class="grid-2">
+              <div>
+                <label for="name">Nombre</label>
+                <input id="name" name="name" required placeholder="Tu nombre">
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required placeholder="tu@correo.com">
+              </div>
+            </div>
+
+            <div>
+              <label for="service">Servicio</label>
+              <select id="service" name="service">
+                <option>Asesoría legal general</option>
+                <option>Revisión de contrato</option>
+                <option>Representación</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="message">Mensaje</label>
+              <textarea id="message" name="message" rows="4" placeholder="Cuéntanos brevemente tu caso" required></textarea>
+            </div>
+
+            <div style="display:flex; gap:12px; align-items:center; justify-content:space-between; margin-top:8px">
+              <div class="small muted">Al enviar, aceptas nuestra política de privacidad.</div>
+              <div style="display:flex; gap:8px">
+                <button type="reset" class="pill">Limpiar</button>
+                <button type="submit" class="cta">Enviar mensaje</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <aside class="card reveal">
+          <h4>Visítanos</h4>
+          <p class="muted small">Oficina central: Calle Falsa 123, Ciudad. Tel: (55) 1234 5678</p>
+          <div style="height:220px; margin-top:12px; border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.03)">
+            <iframe title="mapa" width="100%" height="100%" style="border:0" srcdoc="<div style='height:100%;display:flex;align-items:center;justify-content:center;background:#07121a;color:#9aa4b2;font-family:Inter;padding:18px'>Mapa - reemplazar con Google Maps</div>"></iframe>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section style="margin-top:32px">
+      <h3>Reseñas de clientes</h3>
+      <p class="muted small">Lo que dicen nuestros clientes</p>
+      <div class="testimonials card" style="margin-top:12px; overflow:hidden">
+        <div style="position:relative;">
+          <div id="slides" class="slides">
+            <div class="slide testimonial-card">
+              <strong>María G.</strong>
+              <p class="muted small">"Excelente atención y resultados. Me ayudaron a resolver un conflicto familiar con mucha sensibilidad y profesionalismo."</p>
+            </div>
+            <div class="slide testimonial-card">
+              <strong>Empresa XYZ</strong>
+              <p class="muted small">"Profesionales, ágiles y con gran experiencia en asuntos corporativos. Altamente recomendados."</p>
+            </div>
+            <div class="slide testimonial-card">
+              <strong>Javier L.</strong>
+              <p class="muted small">"Transparencia en costos y excelente comunicación durante todo el proceso."</p>
+            </div>
+          </div>
+
+          <div style="position:absolute; right:12px; bottom:12px; display:flex; gap:8px">
+            <button id="prev" class="pill">‹</button>
+            <button id="next" class="pill">›</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
   <footer>
-    <p>© 2025 Martínez & Asociados. Todos los derechos reservados.</p>
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap">
+        <div>
+          <div style="font-weight:700">Despacho Jurídico</div>
+          <div class="muted small">© " + new Date().getFullYear() + " - Todos los derechos reservados</div>
+        </div>
+        <div class="small muted">Política de privacidad • Términos</div>
+      </div>
+    </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Small helper: smooth scroll for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      })
+    })
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, {threshold: .12});
+    reveals.forEach(r=>io.observe(r));
+
+    // Mobile menu toggle
+    const menuBtn = document.querySelector('.menu-toggle');
+    const navUl = document.querySelector('nav ul');
+    menuBtn && menuBtn.addEventListener('click', ()=>{
+      if(navUl.style.display === 'flex') navUl.style.display = 'none'; else navUl.style.display = 'flex';
+      navUl.style.flexDirection = 'column'; navUl.style.background = 'rgba(6,10,14,0.6)'; navUl.style.padding = '12px'; navUl.style.position='absolute'; navUl.style.right='32px'; navUl.style.top='70px'; navUl.style.borderRadius='10px';
+    })
+
+    // Testimonials slider
+    const slides = document.getElementById('slides');
+    let index = 0;
+    const total = slides.children.length;
+    function show(i){
+      index = (i+total)%total;
+      slides.style.transform = 'translateX(' + (-index * 100) + '%)';
+    }
+    document.getElementById('prev').addEventListener('click', ()=> show(index-1));
+    document.getElementById('next').addEventListener('click', ()=> show(index+1));
+    // Auto rotate
+    let auto = setInterval(()=> show(index+1), 6000);
+    [document.getElementById('prev'), document.getElementById('next')].forEach(b=>{
+      b.addEventListener('click', ()=>{ clearInterval(auto); auto = setInterval(()=> show(index+1), 8000); })
+    })
+
+    // Simple form handling (simulated)
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = new FormData(form);
+      const payload = {};
+      data.forEach((v,k)=> payload[k]=v);
+
+      // Basic validation
+      if(!payload.name || !payload.email || !payload.message){
+        alert('Por favor completa los campos obligatorios.');
+        return;
+      }
+
+      // Simulate async submit
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true; submitBtn.textContent = 'Enviando...';
+      setTimeout(()=>{
+        submitBtn.disabled = false; submitBtn.textContent = 'Enviar mensaje';
+        alert('Gracias, ' + payload.name + '! Hemos recibido tu mensaje. Nos pondremos en contacto pronto.');
+        form.reset();
+      }, 1200);
+    });
+
+    // Accessibility: enable keyboard control for slider
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowRight') show(index+1);
+      if(e.key === 'ArrowLeft') show(index-1);
+    });
+
+  </script>
 </body>
 </html>
